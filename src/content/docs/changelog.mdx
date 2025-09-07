@@ -1,0 +1,66 @@
+---
+title: Changelog
+component: true
+description: ""
+---
+
+## 2025 June
+
+### New Component
+
+- <Link href="/docs/components/carousel/box-carousel">Box Carousel</Link>
+
+### Updated components
+
+Some components have been updated with better a11y support, improved documentation, and bug fixes, but there are no breaking changes.
+This is an ongoing effort which will continue in the future as well.
+
+## 2025 May
+
+### New Components
+
+- <Link href="/docs/components/text/text-highlighter">Text Highlighter</Link>
+- <Link href="/docs/components/text/letter-3d-swap">Letter 3D Swap</Link>
+- <Link href="/docs/components/image/image-trail">Image Trail</Link>
+- <Link href="/docs/components/blocks/css-box">CSS Box</Link>
+
+## 2025 Apr
+
+### New Components
+
+- <Link href="/docs/components/blocks/simple-marquee">Simple Marquee</Link>
+- <Link href="/docs/components/blocks/marquee-along-svg-path">Marquee Along SVG Path</Link>
+
+### Framer integration
+
+Some of the components are now compatible with Framer, thanks to the work of [Framer University](https://x.com/learnframer) & [Achille](https://x.com/achilleernlt).
+
+Available components for remixing:
+
+- <Link href="/docs/components/text/scramble-in">Scramble In</Link>
+- <Link href="/docs/components/background/pixel-trail">Pixel Trail</Link>
+- <Link href="/docs/components/physics/elastic-line">Elastic Line</Link>
+- <Link href="/docs/components/physics/cursor-attractor-gravity">Cursor Attractor & Gravity</Link>
+- <Link href="/docs/components/image/parallax-floating">Parallax Floating</Link>
+- <Link href="/docs/components/blocks/circling-elements">Circling Elements</Link>
+- <Link href="/docs/components/blocks/screensaver">Screensaver</Link>
+
+## 2025 March
+
+### Tailwind v4 Migration 🎉
+We've upgraded to Tailwind v4! This major version brings several important changes:
+
+**Breaking Changes:**
+- Configuration is now stored directly in `global.css` instead of `tailwind.config.ts`
+- The open-in-v0 feature currently doesn't support CSS variables - these need to be added manually
+- CLI installation behavior has changed: CSS variables won't automatically merge with `global.css` when using layers, so you need to add them manually for now. 
+- Syntax changes for Tailwind classes and colors (see official [migration guide](https://tailwindcss.com/docs/upgrade-guide))
+
+**Affected Components:**
+- Circling Elements
+- Animated Gradient With SVG
+
+**Documentation Updates:**
+- Contribution guidelines have been updated to reflect v4 changes
+
+For a complete overview of syntax changes and new features, please refer to the official [Tailwind v4 announcement](https://tailwindcss.com/blog/tailwindcss-v4#css-first-configuration).

@@ -1,0 +1,153 @@
+---
+title: Letter Swap
+description: A text component that swaps the letters vertically on hover.
+component: true
+---
+
+<ComponentPreview name="letter-swap-demo" />
+
+There are two types of animations available for this component:
+
+1. Forward animation — plays the animation timeline once forward, when you hover over the text.
+2. Ping Pong animation — plays the animation timeline in a ping pong fashion. It plays once forward when you hover over the text, and once in the opposite direction when you hover away from the text.
+
+## Installation
+
+### Only forward animation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/letter-swap-forward-anim.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+<ComponentSource name="letter-swap-forward-anim" />
+
+</TabsContent>
+</Tabs>
+
+### Ping Pong animation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/letter-swap-pingpong-anim.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+Install the following dependencies:
+
+<InstallTabs command="lodash" />
+
+Lodash is used for debouncing here — so the animation doesn't break on rapid hover changes.
+
+Then, copy the source code:
+
+<ComponentSource name="letter-swap-pingpong-anim" />
+
+</TabsContent>
+</Tabs>
+
+## Understanding the component
+
+1. First, we duplicate the text we want to animate. We'll have two identical copies of the text.
+
+2. We create a container `<span>` element with these key properties:
+
+   - `position: relative` - This establishes a positioning context
+   - `overflow: hidden` - This ensures text outside the container boundaries is hidden
+
+3. For each copy of the text:
+
+   - We split it into individual letters
+   - Each letter is wrapped in its own `<span>` element, with `absolute` positioning
+   - The letters from both copies are stacked vertically on top of each other (`top: 0`, and `top: 100%`)
+
+4. When hovering:
+   - The original letters slide upward out of view (hidden by overflow), by setting `top: 100%`
+   - The duplicate letters slide up into the original position, by setting `top: 0`
+   - This creates a smooth swapping effect
+
+If `reverse` is enabled, the animation direction is flipped.
+
+### Stagger
+
+With the `staggerFrom` prop, you can control the index of the letter where the stagger animation starts.
+
+<ComponentPreview name="letter-swap-demo-stagger" />
+
+### Line swap
+
+By setting the `staggerDelay` prop to zero, you can create a line swap effect.
+
+<ComponentPreview name="letter-swap-demo-line" />
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>label<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The text to be displayed and animated</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>reverse</TableCell>
+      <TableCell>`boolean`</TableCell>
+      <TableCell>`true`</TableCell>
+      <TableCell>Direction of the animation (true: bottom to top, false: top to bottom)</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>transition</TableCell>
+      <TableCell>`AnimationOptions`</TableCell>
+      <TableCell>`{ type: "spring", duration: 0.7 }`</TableCell>
+      <TableCell>Animation configuration for each letter. Refer to motion docs for more details</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>staggerDuration</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`0.03`</TableCell>
+      <TableCell>Delay between each letter's animation start</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>staggerFrom</TableCell>
+      <TableCell>`"first" | "last" | "center" | number`</TableCell>
+      <TableCell>`"first"`</TableCell>
+      <TableCell>Starting point of the stagger effect</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Additional CSS classes for styling</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>onClick</TableCell>
+      <TableCell>`() => void`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Callback function for click events</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

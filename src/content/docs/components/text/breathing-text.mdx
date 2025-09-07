@@ -1,0 +1,104 @@
+---
+title: Breathing Text
+description: A text component that animates the font variation settings of letters in a breathing effect continuously. Works only with variable fonts.
+component: true
+---
+
+<ComponentPreview name="breathing-text-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/breathing-text.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+<ComponentSource name="breathing-text" />
+
+</TabsContent>
+</Tabs>
+
+## Understanding Variable Fonts
+
+This component is designed to work exclusively with variable fonts. Please refer to the <Link href="/docs/components/text/variable-font-hover-by-letter#understanding-variable-fonts">Variable Font Hover By Letter</Link> documentation for more details.
+
+## Notes
+
+Since the animation is continous, keep the performance in check when using this component.
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>children<span className="text-red-500">*</span></TableCell>
+      <TableCell>`React.ReactNode`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The content to be displayed and animated</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>as</TableCell>
+      <TableCell>`ElementType`</TableCell>
+      <TableCell>`"span"`</TableCell>
+      <TableCell>HTML Tag to render the component as</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>fromFontVariationSettings<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Initial font variation settings</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>toFontVariationSettings<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Target font variation settings to animate to</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>transition</TableCell>
+      <TableCell>`Transition`</TableCell>
+      <TableCell>`{ duration: 1.5, ease: "easeInOut" }`</TableCell>
+      <TableCell>Animation transition configuration</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>staggerDuration</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`0.1`</TableCell>
+      <TableCell>Duration of stagger delay between elements in seconds</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>staggerFrom</TableCell>
+      <TableCell>`"first" | "last" | "center" | number`</TableCell>
+      <TableCell>`"first"`</TableCell>
+      <TableCell>Direction to stagger animations from</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>repeatDelay</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`0.1`</TableCell>
+      <TableCell>Delay between animation repeats in seconds</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Class name for styling</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

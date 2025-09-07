@@ -1,0 +1,118 @@
+---
+title: Pixel Trail
+description: A pixelated trail effect that recolors grid pixels as you move your cursor.
+component: true
+---
+
+<ComponentPreview name="pixel-trail-demo" framerLink="https://framer.university/resources/pixel-trail-effect-for-framer" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/pixel-trail.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+Install the `uuid` package:
+
+<InstallTabs command="@types/uuid uuid" />
+
+We use the uuid package to generate a unique ID for each trail instance — so each trail will work without interfering with other effects.
+
+Then, copy and paste the component source code into your project:
+
+<ComponentSource name="pixel-trail" />
+
+</TabsContent>
+</Tabs>
+
+## Usage
+
+Just drop the `PixelTrail` component into your project, define a pixelSize, and pass the `pixelColor` prop. You can also pass a `className` prop to style the container, and a `pixelClassName` prop to style the individual pixels.
+
+## Examples
+
+### Without fading
+
+If you set the `fadeDuration` prop to `0`, and increase the `delay` prop, you can create a trail effect that doesn't fade.
+
+<ComponentPreview name="pixel-trail-no-fade-demo" />
+
+### Customizing the pixels
+
+You can customize the individual pixels by passing a `pixelClassName` prop.
+
+<ComponentPreview name="pixel-trail-custom-pixel-demo" />
+
+### Combining with SVG Filters
+
+The following example combines the <Link href="/docs/components/filter/gooey-filter">GooeyFilter</Link> component with the PixelTrail component to create a fluid interface. Unfortunately, the component doesn't support Safari, so you'll need to create a fallback for that.
+
+<ComponentPreview name="gooey-svg-filter-pixel-trail-demo" />
+
+## Notes
+
+1. The component operates by dividing the container into a grid of pixels and dynamically recoloring them as you move your cursor. Each pixel is represented by a single div element, so perf may be impacted when using a large number of pixels, especially on the first render.
+
+2. Keep the z-index of the effect's container lower than the rest of your content, so the pointer-events will captured by all of your other elements.
+
+## Credits
+
+Ported to Framer by [Framer University](https://framer.university/)
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>pixelSize</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`20`</TableCell>
+      <TableCell>Size of each pixel in pixels</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>fadeDuration</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`500`</TableCell>
+      <TableCell>Duration of the fade animation in milliseconds</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>delay</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`0`</TableCell>
+      <TableCell>
+        Delay before the fade animation starts in milliseconds
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Additional CSS classes for styling</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>pixelClassName</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>
+        Additional CSS classes for styling the individual pixels
+      </TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

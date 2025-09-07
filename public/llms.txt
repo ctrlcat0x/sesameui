@@ -1,0 +1,16 @@
+# Fancy Components
+
+> A collection of fun and weird, ready-to-use components and microinteractions built with React, TypeScript, Tailwind CSS, and Motion (formerly Framer Motion).
+
+Fancy Components aims to inject playfulness into web UI by providing copy-and-paste-able components inspired by award-winning sites. All components are open source and free to use for personal or commercial projects.
+
+## Additional Resources
+
+- [GitHub Repository](https://github.com/danielpetho/fancy): Source code and contributions
+- [Interactive Documentation](https://fancycomponents.dev): Full documentation with live examples
+- [Installation Guide](https://fancycomponents.dev/docs/installation.md): Setup instructions
+- [Changelog](https://fancycomponents.dev/docs/changelog.md): Recent updates and new components
+
+---
+
+All components are available in both interactive format (for developers) and markdown format (for LLMs and documentation tools). Simply append `.md` to any documentation URL to access the markdown version.

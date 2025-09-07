@@ -1,0 +1,150 @@
+---
+title: Circling Elements
+description: A component that creates a circling effect on its children.
+component: true
+---
+
+<ComponentPreview name="circling-elements-demo" framerLink="https://www.soyakil.fr/ressources/circling-images" />
+
+Inspiration from [Bakken & Bæck](https://www.instagram.com/p/DBG5fLdiN4Q/?img_index=1)
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/circling-elements.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+Copy and paste the following code into your project:
+
+<ComponentSource name="circling-elements" />
+
+Add the following animation and keyframes to your `globals.css` file:
+
+<CodeSnippet title="globals.css">
+```css
+{
+/* ... */
+  @theme: {
+    --animate-circling: circling;
+    @keyframes circling {
+      0% {
+        transform: rotate(calc(var(--offset) * 1deg)) translate(calc(var(--radius) * 1px), 0) rotate(calc(var(--offset) * -1deg));
+      }
+      100% {
+        transform: rotate(calc(360deg + (var(--offset) * 1deg))) translate(calc(var(--radius) * 1px), 0) rotate(calc(-360deg + (var(--offset) * -1deg)));
+      }
+    },
+  },
+};
+```
+</CodeSnippet>
+
+</TabsContent>
+</Tabs>
+
+## Usage
+
+You only need to wrap your elements with the `CirclingElements` component, everything else is taken care of by the component itself.
+
+## Understanding the component
+
+Under the hood, the component wraps all the children in a `relative` container, then sets all children to `absolute` to allow the circling movement.
+
+The animation is achieved through CSS keyframes that create a circular motion. At the start (0%), each element is rotated by its offset angle, translated outward by the radius, and counter-rotated to maintain orientation. At the end (100%), it completes a full 360-degree rotation while maintaining the same radius and orientation. The `--circling-direction` variable allows reversing the animation direction.
+
+The keyframes use CSS calc() to dynamically compute the transforms based on the following variables:
+
+- `--circling-offset` (element's starting angle)
+- `--circling-radius` (circle size)
+- `--circling-direction` (1 or -1 for direction)
+
+## Examples
+
+### Easing & direction
+
+You can set custom easings and reverse direction for the animation, as you can see in this demo.
+
+<ComponentPreview name="circling-elements-easing-demo" />
+
+## Credits
+
+Ported to Framer by [Achille Ernoult](https://x.com/achilleernlt)
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>
+        children<span className="text-red-500">*</span>
+      </TableCell>
+      <TableCell>`ReactNode`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The elements to be circled</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>radius</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`100`</TableCell>
+      <TableCell>The radius of the circle in pixels</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>duration</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`10`</TableCell>
+      <TableCell>The duration of one complete rotation in seconds</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>easing</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>`linear`</TableCell>
+      <TableCell>
+        The easing function for the animation. Refer to the official [mdn
+        docs](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function)
+        for more details
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>direction</TableCell>
+      <TableCell>`"normal" | "reverse"`</TableCell>
+      <TableCell>`normal`</TableCell>
+      <TableCell>
+        The direction of the animation. Set to `"reverse"` to reverse the
+        animation
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>pauseOnHover</TableCell>
+      <TableCell>`boolean`</TableCell>
+      <TableCell>`false`</TableCell>
+      <TableCell>Pause the animation on hover</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Additional CSS classes for the container</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## Credits
+
+Inspiration for the demo from [Bakken & Bæck](https://www.instagram.com/p/DBG5fLdiN4Q/?img_index=1)

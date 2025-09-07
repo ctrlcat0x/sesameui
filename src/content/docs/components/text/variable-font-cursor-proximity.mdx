@@ -1,0 +1,137 @@
+---
+title: Variable Font Cursor Proximity
+description: A text component that animates the font variation settings of letters based on the cursor proximity. Works only with variable fonts.
+component: true
+---
+
+<ComponentPreview name="variable-font-cursor-proximity-demo" framerLink="https://framer.university/resources/text-magnifier-component-for-framer" />
+
+A generalized version of this component (where you can control any CSS property) is available in the <Link href="/docs/components/text/text-cursor-proximity">Text Cursor Proximity</Link> component.
+
+## Installation 
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/variable-font-cursor-proximity.json&quot;" npx />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+Create a hook for querying the cursor/mouse position.
+
+<ComponentSource name="use-mouse-position-ref" />
+
+This hook actually returns a ref to the position (instead of a state), so we can avoid re-renders when the cursor moves.
+
+Then, copy and paste the component source code into your project:
+
+<ComponentSource name="variable-font-cursor-proximity" />
+
+</TabsContent>
+</Tabs>
+
+## Understanding the component
+
+The `VariableFontCursorProximity` splits its text into letters, that respond to cursor movement by adjusting their font variation settings, based on the distance between the letter and cursor distance. This component works only with variable fonts.
+
+1. Splitting text into individual letters
+2. Tracking cursor position relative to each letter
+3. Smoothly transitioning font variations based on proximity
+4. Supporting multiple falloff patterns for the effect
+
+This component requires the use of variable fonts to function properly. Otherwise it will not work.
+
+### How it works
+
+The component calculates the distance between the cursor and each letter in real-time. When the cursor comes within the specified `radius` of a letter, that letter's font variations (like weight, slant, etc.) smoothly interpolate between two states:
+
+- The default state (`fromFontVariationSettings`)
+- The target state (`toFontVariationSettings`)
+
+The closer the cursor gets to a letter, the closer that letter moves toward its target state.
+
+### Understanding Variable Fonts
+
+For more information about variable fonts and how they work, please refer to the <Link href="/docs/components/text/variable-font-hover-by-letter#understanding-variable-fonts">Variable Font Hover By Letter</Link> documentation.
+
+## Examples
+
+### Falloff
+
+With the `falloff` prop, you can control the type of falloff. It can be either `linear`, `exponential`, or `gaussian`. The following demo showcases the `exponential` one. The effects are best observed on a larger block of text.
+
+<ComponentPreview name="variable-font-cursor-proximity-falloff-demo" />
+
+## Notes
+
+- Interpolating on large number of letters simultaneously can be a bit slow, even when we're avoiding re-renders with state updates. If you're experienceing performance issues, try to limit the length of the text you're animating.
+
+- Make sure the main container has enough space to hold the text at its full weight to avoid layout shifts. For example, you can use negative margins like in the 2nd example.
+
+## Credits
+
+Ported to Framer by [Framer University](https://framer.university/)
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>label<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The text to be displayed and animated</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>fromFontVariationSettings<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Default font variation settings</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>toFontVariationSettings<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Target font variation settings</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>containerRef<span className="text-red-500">*</span></TableCell>
+      <TableCell>`React.RefObject<HTMLDivElement>`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Reference to the container for mouse tracking</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>radius</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`50`</TableCell>
+      <TableCell>The radius of the proximity effect</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>falloff</TableCell>
+      <TableCell>`"linear" | "exponential" | "gaussian"`</TableCell>
+      <TableCell>`"linear"`</TableCell>
+      <TableCell>The falloff type of the proximity</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Additional CSS classes for styling</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

@@ -1,0 +1,88 @@
+---
+title: Scroll and Swap Text
+description: A text component that swaps the letters vertically on scroll.
+component: true
+---
+
+<ComponentPreview name="scroll-and-swap-text-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/scroll-and-swap-text.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+<ComponentSource name="scroll-and-swap-text" />
+
+</TabsContent>
+</Tabs>
+
+## Understanding the component
+
+The trick here is similar to the [Letter Swap Hover](/docs/components/text/letter-swap-hover) component—duplicate the text, then wrapping the them in a container with `relative` position, then stack the elements vertically. We use `useScroll` hook from motion to track the scroll position of the container, and use the `scrollYProgress` value to offset the vertical position of the elements (by setting the `y` property of the element).
+
+## Notes
+
+- In order to achieve a nice effect, you likely have to play with the container (where to track the scroll) and its offset. Please refer to motion's [documentation](https://www.framer.com/motion/use-scroll/) for more details.
+
+- Make sure that the container has a non-static position, like `relative`, `fixed`, or `absolute` to ensure scroll offset is calculated correctly.
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>children<span className="text-red-500">*</span></TableCell>
+      <TableCell>`React.ReactNode`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The content to be displayed and animated</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>as</TableCell>
+      <TableCell>`ElementType`</TableCell>
+      <TableCell>`"span"`</TableCell>
+      <TableCell>HTML Tag to render the component as</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>containerRef<span className="text-red-500">*</span></TableCell>
+      <TableCell>`React.RefObject<HTMLElement>`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Reference to the container element for scroll tracking</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>offset</TableCell>
+      <TableCell>`[string, string]`</TableCell>
+      <TableCell>`["0 0", "0 1"]`</TableCell>
+      <TableCell>Offset configuration for when the animation should start and end relative to the scroll container</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Additional CSS classes for styling the component</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>springConfig</TableCell>
+      <TableCell>`{ stiffness?: number, damping?: number, mass?: number }`</TableCell>
+      <TableCell>`{ stiffness: 200, damping: 30 }`</TableCell>
+      <TableCell>Spring animation configuration for smoothing the scroll-based animation</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

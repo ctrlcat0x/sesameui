@@ -1,0 +1,87 @@
+---
+title: Underline To Background
+description: A text component that animates a text underline into a text background.
+component: true
+---
+
+<ComponentPreview name="underline-to-background-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/underline-to-background.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+<ComponentSource name="underline-to-background" />
+
+</TabsContent>
+</Tabs>
+
+## Understanding the component
+
+The component creates a separate `div` element positioned absolutely below the text (instead of the regular underline elements with CSS pseudo-elements). It animates the height from a thin line (controlled by `underlineHeightRatio`) to cover the full text height, effectively becoming a background. Simultaneously, it transitions the text color to maintain contrast against the expanding background.
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>children<span className="text-red-500">*</span></TableCell>
+      <TableCell>`React.ReactNode`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The content to be displayed and animated</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>as</TableCell>
+      <TableCell>`ElementType`</TableCell>
+      <TableCell>`"span"`</TableCell>
+      <TableCell>HTML Tag to render the component as</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>`undefined`</TableCell>
+      <TableCell>Optional class name for styling</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>transition</TableCell>
+      <TableCell>`ValueAnimationTransition`</TableCell>
+      <TableCell>`{ type: "spring", damping: 30, stiffness: 300 }`</TableCell>
+      <TableCell>Animation transition configuration</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>targetTextColor<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>`"#fef"`</TableCell>
+      <TableCell>The color that the text will animate to on hover</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>underlineHeightRatio</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`0.1`</TableCell>
+      <TableCell>Height of the underline as a ratio of font size</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>underlinePaddingRatio</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`0.01`</TableCell>
+      <TableCell>Padding of the underline as a ratio of font size</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

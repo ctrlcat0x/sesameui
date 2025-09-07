@@ -1,0 +1,183 @@
+---
+title: Parallax Floating
+description: A component that creates a parallax floating effect on cursor/touch movement. Works also with videos, svgs, or any type of html elements.
+component: true
+---
+
+<ComponentPreview name="parallax-floating-demo" framerLink="https://framer.university/resources/parallax-floating-effect-in-framer" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/parallax-floating.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+Create a hook for querying the cursor position:
+
+<ComponentSource name="use-mouse-position" />
+
+Then copy and paste the following code into your project:
+
+<ComponentSource name="parallax-floating" />
+
+</TabsContent>
+</Tabs>
+
+## Usage
+
+There are two components exported from the source file: `Floating` and `FloatingElement`. The first one is a wrapper component that takes care of the animation, mouse position tracking and other logic. The second one is a component that you **must** use to wrap any elements you want to float.
+
+<CodeSnippet title="Floating Example">
+```tsx
+<Floating>
+  <FloatingElement depth={0.5}>
+    <div className="absolute top-1/2 left-1/4 bg-red-500" />
+  </FloatingElement>
+  <FloatingElement depth={1}>
+    <div className="absolute top-1/2 left-2/4 bg-green-500" />
+  </FloatingElement>
+  <FloatingElement depth={2}>
+    <div className="absolute top-1/2 left-3/4 bg-blue-500" />
+  </FloatingElement>
+</Floating>
+```
+</CodeSnippet>
+
+The advantage of this setup is that you can style and position your elements however you want using Tailwind classes or custom CSS directly on the `FloatingElement` component, while the `Floating` wrapper component handles all the complex animation logic. Simply wrap your positioned elements with `FloatingElement`, set their `depth` value, and the floating effect will be applied while maintaining your original styling and positioning.
+
+## Understanding the component
+
+If you're curious how it works, here's a quick overview of the component's internals:
+
+1. **Element Registration**: Using React Context, each `FloatingElement` child registers itself with the parent `Floating` component, providing its DOM reference and depth value.
+
+2. **Mouse Position Tracking**: The component tracks mouse movement across the screen using a custom hook that provides normalized coordinates relative to the container.
+
+3. **Animation Loop**: Using Framer Motion's `useAnimationFrame`, the component runs a continuous animation loop that:
+
+   - Calculates the target position for each element based on the mouse coordinates
+   - Applies linear interpolation (lerp) to smoothly transition elements to their new positions
+   - Updates the transform property of each element using CSS transforms
+
+4. **Strength**: The floating effect is customized through two main factors:
+   - Individual `depth` values on each `FloatingElement` determine how far that element moves. The higher the depth, the farther the element will move.
+   - The global `sensitivity` prop controls the overall intensity of the movement
+5. **Lerp**: The `easingFactor` prop determines how quickly elements move toward their target positions - lower values create smoother, more gradual movements while higher values create snappier responses.
+
+## Notes
+
+### Z-Index Management
+
+The `Floating` component focuses solely on movement animation and does not handle z-index stacking. You'll need to manually set appropriate z-index values on your `FloatingElement` components to achieve the desired layering effect. The `depth` prop only controls the intensity of the floating movement, not the visual stacking order.
+
+### Performance Optimization
+
+For better performance when dealing with multiple floating elements, you can use a grouping strategy:
+
+1. Instead of creating individual `FloatingElement` components for each item, group related items under a single `FloatingElement`
+2. All children of a `FloatingElement` will move together with the same depth value
+3. This reduces the number of elements being calculated and transformed
+
+For example, if you have 6 floating images, instead of creating 6 separate `FloatingElement` components, you could group them into 3 pairs. This reduces the animation calculations from 6 to 3.
+
+### Directional Control
+
+With the `depth` and `sensitivity` props, you can control the direction, and strength of the floating effect:
+
+- **Positive Values**: Elements move toward the mouse cursor
+
+  - Higher values create stronger movement
+  - Example: `depth={2}` moves twice as far as `depth={1}`
+
+- **Negative Values**: Elements move away from the mouse cursor
+  - Creates an inverse floating effect
+  - Example: `depth={-1}` moves in the opposite direction of the mouse
+
+## Credits
+
+Ported to Framer by [Framer University](https://framer.university/)
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>
+        children<span className="text-red-500">*</span>
+      </TableCell>
+      <TableCell>`React.ReactNode`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The content to be displayed</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>sensitivity</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`0.1`</TableCell>
+      <TableCell>The sensitivity of the movement</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>easingFactor</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`0.05`</TableCell>
+      <TableCell>The easing factor of the movement</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Additional CSS classes for styling</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+### FloatingElement
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>
+        children<span className="text-red-500">*</span>
+      </TableCell>
+      <TableCell>`React.ReactNode`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The content to be displayed</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>depth</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`1`</TableCell>
+      <TableCell>The depth of the element</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Additional CSS classes for styling</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

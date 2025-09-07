@@ -1,0 +1,143 @@
+---
+title: Animated Gradient With SVG
+description: An animated multi-color gradient background effect with SVG elements.
+component: true
+toc: true
+---
+
+<ComponentPreview name="animated-gradient-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/animated-gradient-with-svg.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+Add this hook for querying the dimensions of an element:
+
+<ComponentSource name="use-dimensions" />
+
+Update your `globals.css` file to include the animation keyframes:
+
+<CodeSnippet title="globals.css">
+```css
+  /* ... */
+  @theme: {
+    --animate-background-gradient: background-gradient;
+    @keyframes: background-gradient {
+      0%, 100% {
+        transform: translate(0, 0);
+        animationDelay: var(--background-gradient-delay, 0s);
+      }
+      20% {
+        transform: translate(calc(100% * var(--tx-1, 1)), calc(100% * var(--ty-1, 1)));
+      }
+      40% {
+        transform: translate(calc(100% * var(--tx-2, -1)), calc(100% * var(--ty-2, 1)));
+      }
+      60% {
+        transform: translate(calc(100% * var(--tx-3, 1)), calc(100% * var(--ty-3, -1)));
+      }
+      80% {
+        transform: translate(calc(100% * var(--tx-4, -1)), calc(100% * var(--ty-4, -1)));
+      }     
+    }
+  },
+};
+```
+</CodeSnippet>
+
+Then, copy and paste the following code into your project:
+
+<ComponentSource name="animated-gradient-with-svg" />
+
+</TabsContent>
+</Tabs>
+
+## Understanding the component
+
+Animated gradients can be achieved with many different techniques (shaders, CSS gradients, etc.), this component uses simple SVG circles with a blur filter to create the effect.
+
+1. For each color in the `colors` prop array, the component creates an SVG circle element
+2. Each circle is given a random initial position using percentage values
+3. The movement of each circle is controlled by 8 CSS variables that define target positions:
+   - `--tx-1` and `--ty-1` for the first position
+   - `--tx-2` and `--ty-2` for the second position
+   - And so on for positions 3 and 4
+4. These variables are set to random values between -0.5 and 0.5.
+
+<CodeSnippet title="Movement variables">
+```tsx
+style={
+  {
+    //...
+    "--tx-1": (Math.random() - 0.5),
+    "--ty-1": (Math.random() - 0.5),
+    "--tx-2": (Math.random() - 0.5),
+    "--ty-2": (Math.random() - 0.5),
+    "--tx-3": (Math.random() - 0.5),
+    "--ty-3": (Math.random() - 0.5),
+    "--tx-4": (Math.random() - 0.5),
+    "--ty-4": (Math.random() - 0.5),
+  } as React.CSSProperties
+}
+```
+</CodeSnippet>
+
+5. The `background-gradient` animation keyframes are used to animate the circles between these positions
+6. Lastly, we blur the container element which holds the circles, to create a smooth effect.
+
+If you would like to achieve a more complex animation, you have to edit the component directly, for example:
+
+1. Add more keyframe positions by increasing the number of `--tx` and `--ty` variables
+2. Use cubic-bezier timing functions to create non-linear movement
+3. Add rotation or scaling transforms
+
+and so on.
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>
+        colors<span className="text-red-500">*</span>
+      </TableCell>
+      <TableCell>`string[]`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Array of color strings to be used in the gradient</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>speed</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`5`</TableCell>
+      <TableCell>
+        Speed of the animation (this is somewhat an arbitrary number, refer
+        tothe source code for more details)
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>blur</TableCell>
+      <TableCell>`"light" | "medium" | "heavy"`</TableCell>
+      <TableCell>`"light"`</TableCell>
+      <TableCell>Intensity of the blur effect</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

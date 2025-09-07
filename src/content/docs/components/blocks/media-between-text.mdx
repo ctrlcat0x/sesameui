@@ -1,0 +1,187 @@
+---
+title: Media Between Text
+description: A component that animates a media (image or video) between two text elements.
+component: true
+---
+
+<ComponentPreview name="media-between-text-demo" />
+
+Artwork by [Joffey](https://www.instagram.com/designbyjoffey/)
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/media-between-text.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+<ComponentSource name="media-between-text" />
+
+</TabsContent>
+</Tabs>
+
+## Usage
+
+The component is extremely simple, and only consists of two text elements and a media element (either an image or a video). The trick for the smooth animation is to use `layout` animations on the two texts, so they smoothly transition when the media element is revealed.
+You can trigger the media reveal animation by `hover`, `ref`, or `inView`:
+
+- `hover`: The media will animate when you hover over the component
+- `ref`: You can call the `animate` and `reset` methods exposed via a ref to manually control the animation
+- `inView`: The media will animate when the component is in view. You can pass an `useInViewOptionsProp` prop to customize the in view detection. Refer to the [motion documentation](https://motion.dev/docs/docs/react-use-in-view) for more details.
+
+You can also customize the animation by passing a `animationVariants` prop. Please use `animate` and `initial` variants. Refer to the [motion documentation](https://motion.dev/docs/react-animation#animatable-values) for more details.
+
+## Examples
+
+### Scroll
+
+Scroll down to trigger the animation. In this case, you can pass down a containerRef prop to the component to track when elements come into view within that specific container, rather than the entire viewport. This is useful when you want to trigger animations based on scrolling within a specific scrollable container.
+
+<ComponentPreview name="media-between-text-scroll-demo" />
+
+Artworks by [Tim Rodenböker](https://www.instagram.com/tim_rodenbroeker/), [polyhop](https://www.instagram.com/polyhop/), [Andreion de Castro](https://www.instagram.com/andreiongd/), [Lorraine Li](https://www.instagram.com/lorrr.l/)
+
+### Vertical & Ref
+
+You can also style the whole container, the media element, and the text elements separately. In this example, we use a column-layout to create a vertical effect. The animation can also be triggered from outside the component, by calling the `animate` and `reset` methods exposed via a ref. Click on the "Open" button to trigger the animation.
+
+<ComponentPreview name="media-between-text-vertical-demo" />
+
+Video from [chrbutler.com](https://www.chrbutler.com/what-i-want-from-the-internet)
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>firstText<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The text to display before the media</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>secondText<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The text to display after the media</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>mediaUrl<span className="text-red-500">*</span></TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>URL of the media (image or video) to display</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>mediaType<span className="text-red-500">*</span></TableCell>
+      <TableCell>`"image" | "video"`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Type of media to display</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>mediaContainerClassName</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Optional class name for the media container</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>fallbackUrl</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Fallback URL for video poster or image loading</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>as</TableCell>
+      <TableCell>`ElementType`</TableCell>
+      <TableCell>`"p"`</TableCell>
+      <TableCell>HTML Tag to render the text elements as</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>autoPlay</TableCell>
+      <TableCell>`boolean`</TableCell>
+      <TableCell>`true`</TableCell>
+      <TableCell>Whether video should autoplay</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>loop</TableCell>
+      <TableCell>`boolean`</TableCell>
+      <TableCell>`true`</TableCell>
+      <TableCell>Whether video should loop</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>muted</TableCell>
+      <TableCell>`boolean`</TableCell>
+      <TableCell>`true`</TableCell>
+      <TableCell>Whether video should be muted</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>playsInline</TableCell>
+      <TableCell>`boolean`</TableCell>
+      <TableCell>`true`</TableCell>
+      <TableCell>Whether video should play inline</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>alt</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Alt text for image</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>triggerType</TableCell>
+      <TableCell>`"hover" | "ref" | "inView"`</TableCell>
+      <TableCell>`"hover"`</TableCell>
+      <TableCell>Type of animation trigger</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>containerRef</TableCell>
+      <TableCell>`React.RefObject<HTMLDivElement>`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Reference to container element for inView trigger</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>useInViewOptionsProp</TableCell>
+      <TableCell>`UseInViewOptions`</TableCell>
+      <TableCell>`{ once: true, amount: 0.5, root: containerRef }`</TableCell>
+      <TableCell>Options for useInView hook</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>animationVariants</TableCell>
+      <TableCell>`{ initial: Variants["initial"]; animate: Variants["animate"] }`</TableCell>
+      <TableCell>`{ initial: { width: 0, opacity: 1 }, animate: { width: "auto", opacity: 1, transition: { duration: 0.4, type: "spring", bounce: 0 } } }`</TableCell>
+      <TableCell>Custom animation variants</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Optional class name for the root element</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>leftTextClassName</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Optional class name for the left text element</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>rightTextClassName</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Optional class name for the right text element</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

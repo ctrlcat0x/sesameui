@@ -1,0 +1,89 @@
+---
+title: Screensaver
+description: A component that animates its child with the infamous screensaver effect.
+component: true
+---
+
+<ComponentPreview name="screensaver-demo" framerLink="https://www.soyakil.fr/ressources/screensaver" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/screensaver.json&quot;" npx />
+
+</TabsContent>
+<TabsContent value="manual">
+
+<ComponentSource name="use-dimensions" />
+
+<ComponentSource name="screensaver" />
+
+</TabsContent>
+</Tabs>
+
+## Usage
+
+Just wrap your content with the component, and the animation will take care of the rest.
+You also need to pass a container ref to the component — which will be used to constrain the screensaver component.
+
+## Credits
+
+Ported to Framer by [Achille Ernoult](https://x.com/achilleernlt)
+
+## Props
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Prop</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Default</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>children<span className="text-red-500">*</span></TableCell>
+      <TableCell>`React.ReactNode`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>The content to be displayed</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>containerRef<span className="text-red-500">*</span></TableCell>
+      <TableCell>`React.RefObject<HTMLElement>`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Reference to the container for the screensaver</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>speed</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`3`</TableCell>
+      <TableCell>Speed of the animation in pixels per second</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>startPosition</TableCell>
+      <TableCell>`{ x: number; y: number }`</TableCell>
+      <TableCell>`{ x: 0, y: 0 }`</TableCell>
+      <TableCell>Starting position of the element</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>startAngle</TableCell>
+      <TableCell>`number`</TableCell>
+      <TableCell>`45`</TableCell>
+      <TableCell>Starting angle of the element in degrees</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>className</TableCell>
+      <TableCell>`string`</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>Additional CSS classes for styling</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
