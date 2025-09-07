@@ -6,7 +6,7 @@ import EmailClient from "@/components/landing/showcase"
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="flex flex-col gap-2 overflow-hidden">
       <LandingHero />
       <EmailClient />
       <ContentSection />

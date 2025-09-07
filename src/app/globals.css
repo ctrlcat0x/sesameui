@@ -384,6 +384,39 @@
     --blue-950: #0a125c;
   }
 
+  /* Bento tile demo link hover: when hovering anywhere inside a tile (group),
+   darken the top-left link and ensure the arrow rotates to horizontal. */
+  /* Bento variables: tuned for light and dark modes below */
+  :root {
+    --bento-tile-bg: #fafafa;
+    --bento-tile-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+    --bento-link: rgba(60, 60, 60, 0.75);
+    --bento-link-hover: rgba(12, 10, 9, 0.95);
+  }
+  .bento-tile.group {
+    position: relative;
+  }
+  .bento-tile.group a {
+    color: rgba(60, 60, 60, 0.7);
+  }
+  .bento-tile.group:hover a {
+    color: var(--foreground);
+  }
+  .bento-tile.group a svg {
+    transition:
+      transform 180ms ease,
+      color 180ms ease;
+  }
+
+  /* Bento tile card backgrounds and shallow shadow for depth */
+  .bento-tile {
+    background: var(--bento-tile-bg);
+    box-shadow: var(--bento-tile-shadow);
+  }
+
+  /* dark-mode overrides for variables (kept near existing .dark block) */
+  /* these will be overridden by the main .dark block below as well, but set safe defaults */
+
   .dark {
     --background: #0c0a09;
     --foreground: #f1f1f3;
@@ -424,6 +457,17 @@
     --teal-foreground: #3bb6ab;
     --yellow: #eab308;
     --yellow-foreground: #ffd726;
+
+    /* Bento overrides for dark mode */
+    --bento-tile-bg: rgba(
+      15,
+      13,
+      13,
+      0.9
+    ); /* slightly lighter than dark page bg */
+    --bento-tile-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --bento-link: rgba(241, 241, 243, 0.85);
+    --bento-link-hover: rgba(255, 255, 255, 0.95);
   }
 }
 
@@ -511,26 +555,6 @@
       format("woff2-variations");
     font-weight: 400;
   }
-}
-.dark body::before {
-  --line: color-mix(in lch, canvasText 10%, var(--background));
-}
-body::before {
-  --line: color-mix(in lch, canvasText 15%, var(--background));
-  --size: 60px;
-  content: "";
-  position: fixed;
-  top: -25vh;
-  height: 200vh;
-  width: 100vw;
-  position: absolute;
-  background:
-    linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size))
-      0 -5vmin / var(--size) var(--size),
-    linear-gradient(var(--line) 1px, transparent 1px var(--size)) 0 -5vmin /
-      var(--size) var(--size);
-  mask: linear-gradient(5deg, transparent 70%, var(--background));
-  z-index: -1;
 }
 .dark .text-glow {
   font-family: serif;

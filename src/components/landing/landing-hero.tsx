@@ -7,6 +7,8 @@ import { LayoutGroup, motion } from "motion/react"
 
 import TextRotate from "@/fancy/components/text/text-rotate"
 
+import { ScramblePreview } from "./typewriter-scramble"
+
 export function LandingHero() {
   const [stars, setStars] = useState<number | null>(null)
 
@@ -22,133 +24,211 @@ export function LandingHero() {
       })
   }, [])
   return (
-    <section className="w-full mt-32 overflow-hidden md:overflow-visible flex flex-col items-center relative">
-      <div className=" flex flex-col justify-center items-center z-50 pointer-events-auto">
-        <motion.div
-          className="my-12"
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.2, ease: "easeOut", delay: 0.1 }}
-        >
-          <Link
-            href="https://github.com/ctrlcat0x/sesameui"
-            target="_blank"
-            className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
+    <section className="w-full mt-8 mb-32 flex justify-center">
+      {/* Container: 90vh height, 95vw width, centered - now using flex layout */}
+      <div
+        className="bento-container flex flex-col"
+        style={{ width: "95vw", height: "90vh", padding: "1rem", gap: "1rem" }}
+      >
+        {/* Top row */}
+        <div className="flex w-full" style={{ height: "30vh", gap: "1rem" }}>
+          <div
+            className="rounded-xl border p-6 bento-tile overflow-hidden flex flex-col justify-center"
+            style={{ width: "40vw", height: "30vh" }}
           >
-            <span className="text-foreground text-sm">
-              Proudly Open Source on GitHub
-            </span>
-            <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
+            <h2 className="text-6xl font-calendas mb-4 leading-tight">
+              Sesame components
+            </h2>
+            <p className="text-lg mb-4">
+              ShadCN Components • Motion Design • GSAP
+            </p>
+            <ul className="text-sm space-y-1 list-disc pl-5">
+              <li>Styled using Tailwind CSS</li>
+              <li>Accessible building blocks</li>
+              <li>Micro-interactions & motion</li>
+              <li>Open source & fast to customize</li>
+              <li>Fully customizable, open code</li>
+            </ul>
+          </div>
 
-            <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500">
-              <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
-                <span className="flex size-6">
-                  <ArrowRight className="m-auto size-3" />
+          <div
+            className="rounded-xl border p-6 bento-tile  overflow-hidden flex flex-col justify-between relative group"
+            style={{ width: "55vw", height: "30vh" }}
+          >
+            {/* Hero content */}
+            <div className="flex items-start justify-between">
+              <div>
+                <motion.h1
+                  className="text-3xl md:text-5xl lg:text-6xl font-calendas leading-tight"
+                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.25, delay: 0.1 }}
+                >
+                  <span className="block text-glow">Let's sprinkle</span>
+                  <LayoutGroup>
+                    <motion.span layout className="flex whitespace-pre">
+                      <motion.span
+                        layout
+                        className="flex whitespace-pre text-glow"
+                        transition={{
+                          type: "spring",
+                          damping: 30,
+                          stiffness: 400,
+                        }}
+                      >
+                        some{" "}
+                      </motion.span>
+                      <TextRotate
+                        texts={["magic", "love ♥", "fun", "cool"]}
+                        mainClassName="overflow-hidden pr-2 text-blue dark:text-blue-500 text-glow2"
+                        staggerDuration={0.03}
+                        staggerFrom="last"
+                        rotationInterval={3000}
+                        transition={{
+                          type: "spring",
+                          damping: 30,
+                          stiffness: 400,
+                        }}
+                      />
+                    </motion.span>
+                  </LayoutGroup>
+                </motion.h1>
+                <p className="text-base mt-2">
+                  A growing library of ready-to-use React components.
+                </p>
+              </div>
+              <div />
+            </div>
+
+            <div className="flex gap-3">
+              <Link
+                href="/docs/introduction"
+                className="bg-foreground text-background px-3 py-2 rounded-md text-sm"
+              >
+                View components
+              </Link>
+              <Link
+                href="https://github.com/ctrlcat0x/sesameui"
+                className="bg-blue text-white px-3 py-2 rounded-md text-sm flex items-center gap-2"
+              >
+                <span>Star us on GitHub</span>
+                <span className="font-display inline-block tracking-wider tabular-nums bg-white/10 px-2 py-0.5 rounded">
+                  ({stars ?? "—"})
                 </span>
-                <span className="flex size-6">
-                  <ArrowRight className="m-auto size-3" />
-                </span>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom row */}
+        <div
+          className="flex w-full"
+          style={{ gap: "1rem", alignItems: "flex-start" }}
+        >
+          <div
+            className="bento-tile rounded-xl border p-6 relative group"
+            style={{ width: "20vw", height: "60vh" }}
+          >
+            <Link
+              href="#"
+              className="absolute top-3 right-3 text-sm flex items-center gap-2 text-gray-500 dark:text-gray-300 transition-colors"
+            >
+              <span className="leading-none">example component name</span>
+              <ArrowRight
+                className="transform -rotate-45 group-hover:rotate-0 transition-transform"
+                size={14}
+              />
+            </Link>
+            <h3 className="font-medium mb-2">Component 2</h3>
+            <p className="text-sm">
+              Placeholder for another tall panel — try images, videos, or
+              interactive previews.
+            </p>
+          </div>
+
+          {/* Center column: Component 3 on top, two buttons below */}
+          <div className="flex flex-col" style={{ width: "55vw", gap: "1rem" }}>
+            <div
+              className="bento-tile rounded-xl border p-6 relative group"
+              style={{ height: "30vh" }}
+            >
+              <Link
+                href="#"
+                className="absolute top-3 right-3 text-sm flex items-center gap-2 text-gray-500 dark:text-gray-300 transition-colors"
+              >
+                <span className="leading-none">example component name</span>
+                <ArrowRight
+                  className="mt-1 transform -rotate-45 group-hover:rotate-0 transition-transform"
+                  size={14}
+                />
+              </Link>
+              <h3 className="font-medium mb-2">Component 3</h3>
+              <p className="text-sm">
+                A wide, short component ideal for feature highlights or demos.
+                Add richer content here to showcase interactions.
+              </p>
+            </div>
+
+            <div className="flex" style={{ gap: "1rem" }}>
+              <div
+                className="bento-tile rounded-xl border p-4 relative group"
+                style={{ width: "27.5vw", height: "28.5vh" }}
+              >
+                <Link
+                  href="#"
+                  className="absolute top-3 right-3 text-sm flex items-center gap-2 text-gray-500 dark:text-gray-300 transition-colors"
+                >
+                  <span className="leading-none">scramble on hover</span>
+                  <ArrowRight
+                    className="transform -rotate-45 group-hover:rotate-0 transition-transform"
+                    size={14}
+                  />
+                </Link>
+                <ScramblePreview />
+              </div>
+              <div
+                className="bento-tile rounded-xl border p-4 relative group"
+                style={{ width: "27.5vw", height: "28.5vh" }}
+              >
+                <Link
+                  href="#"
+                  className="absolute top-3 right-3 text-sm flex items-center gap-2 text-gray-500 dark:text-gray-300 transition-colors"
+                >
+                  <span className="leading-none">example component name</span>
+                  <ArrowRight
+                    className="transform -rotate-45 group-hover:rotate-0 transition-transform"
+                    size={14}
+                  />
+                </Link>
+                <h4 className="font-medium mb-2">Button Component B</h4>
+                <p className="text-sm">
+                  Another variant: icon, label, and motion-ready.
+                </p>
               </div>
             </div>
-          </Link>
-        </motion.div>
-        <motion.h1
-          className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl text-center w-full justify-center items-center flex-col flex whitespace-pre leading-tight font-calendas tracking-tight space-y-1 md:space-y-4"
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.2, ease: "easeOut", delay: 0.3 }}
-        >
-          <span className="text-glow">Make your </span>
-          <LayoutGroup>
-            <motion.span layout className="flex whitespace-pre">
-              <motion.span
-                layout
-                className="flex whitespace-pre text-glow"
-                transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              >
-                website{" "}
-              </motion.span>
+          </div>
 
-              <TextRotate
-                texts={[
-                  "lovely ♥",
-                  "fun",
-                  "weird",
-                  "funky",
-                  "sexy",
-                  "cool",
-                  "over-animated?",
-                  "pop",
-                  "rock",
-                ]}
-                mainClassName="overflow-hidden pr-3 text-blue dark:text-blue-500 py-0 pb-2 md:pb-4 rounded-xl text-glow2"
-                staggerDuration={0.03}
-                staggerFrom="last"
-                rotationInterval={3000}
-                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+          {/* Right tall column */}
+          <div
+            className="bento-tile rounded-xl border p-6 relative group"
+            style={{ width: "20vw", height: "60vh" }}
+          >
+            <Link
+              href="#"
+              className="absolute top-3 right-3 text-sm flex items-center gap-2 text-gray-500 dark:text-gray-300 transition-colors"
+            >
+              <span className="leading-none">example component name</span>
+              <ArrowRight
+                className="transform -rotate-45 group-hover:rotate-0 transition-transform"
+                size={14}
               />
-            </motion.span>
-          </LayoutGroup>
-        </motion.h1>
-        <motion.p
-          className="text-sm sm:text-lg md:text-xl lg:text-2xl text-center font-overused-grotesk pt-4 sm:pt-8 md:pt-10 lg:pt-12"
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.2, ease: "easeOut", delay: 0.5 }}
-        >
-          with a growing library of ready-to-use react components &
-          microinteractions. free & open source.
-        </motion.p>
-
-        <div className="flex flex-row justify-center space-x-4 items-center mt-10 sm:mt-16 md:mt-20 lg:mt-20 text-xs">
-          <motion.button
-            className="w-28 sm:w-32 md:w-36 lg:w-40 sm:text-base md:text-lg lg:text-xl font-medium tracking-tight text-background bg-foreground px-3 py-1.5 sm:px-4 sm:py-2 md:px-4 md:py-2 lg:px-5 lg:py-2.5 rounded-lg md:rounded-xl z-20 shadow-2xl whitespace-nowrap cursor-pointer"
-            animate={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 20 }}
-            transition={{
-              duration: 0.2,
-              ease: "easeOut",
-              delay: 0.7,
-              scale: {
-                duration: 0.2,
-              },
-            }}
-            whileTap={{ scale: 0.95 }}
-            whileHover={{
-              scale: 1.05,
-              transition: { type: "spring", damping: 30, stiffness: 400 },
-            }}
-          >
-            <Link href="/docs/introduction">
-              Check docs <span className="font-serif ml-1">→</span>
             </Link>
-          </motion.button>
-          <motion.button
-            className=" sm:text-base md:text-lg lg:text-xl font-medium tracking-tight text-white bg-blue dark:bg-blue-500 px-3 py-1.5 sm:px-4 sm:py-2 md:px-4 md:py-2 lg:px-5 lg:py-2.5 rounded-lg md:rounded-xl z-20 shadow-2xl whitespace-nowrap cursor-pointer"
-            animate={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 20 }}
-            transition={{
-              duration: 0.2,
-              ease: "easeOut",
-              delay: 0.7,
-              scale: {
-                duration: 0.2,
-              },
-            }}
-            whileTap={{ scale: 0.95 }}
-            whileHover={{
-              scale: 1.05,
-              transition: { type: "spring", damping: 30, stiffness: 400 },
-            }}
-          >
-            <Link href="https://github.com/ctrlcat0x/sesameui">
-              Star us on GitHub ({" "}
-              <span className="font-display inline-block tracking-wider tabular-nums">
-                {stars}
-              </span>
-              )
-            </Link>
-          </motion.button>
+            <h3 className="font-medium mb-2">Component 4</h3>
+            <p className="text-sm">
+              Placeholder for another tall panel — try images, videos, or
+              interactive previews.
+            </p>
+          </div>
         </div>
       </div>
     </section>
