@@ -6,11 +6,11 @@ Sesame provides copy-paste-ready components and small microinteractions inspired
 
 ## Additional Resources
 
-- [GitHub Repository](https://github.com/ctrlcat0x/sesameui): Source code, issues, and contributions
-- Interactive documentation: Open the site and navigate to `/docs` for live examples and usage
-- Installation guide: `/docs/installation`
-- Changelog: `/docs/changelog`
+- [GitHub Repository](https://github.com/ctrlcat0x/sesameui): Source code and contributions
+- Interactive documentation: https://sesameui.vercel.app/docs (live examples)
+- Installation Guide: https://sesameui.vercel.app/docs/installation
+- Changelog: https://sesameui.vercel.app/docs/changelog
 
 ---
 
-All components are available in interactive examples (for developers) and markdown versions suitable for LLMs and documentation tools. To fetch a markdown variant of a docs page, append `.md` to the page URL.
+All components are available in both interactive format (for developers) and markdown format (for LLMs and documentation tools). Simply append `.md` to any documentation URL to access the markdown version.
