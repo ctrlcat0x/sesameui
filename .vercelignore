@@ -1,0 +1,26 @@
+# Ignore local pnpm store and git objects
+
+.pnpm-store/
+.pnpm/
+.git/
+
+# Ignore local development artifacts
+
+.vscode/
+.DS_Store
+
+# Node modules should be resolved by the build on the server
+
+node_modules/
+
+# Ignore build outputs (Vercel handles .next)
+
+.next/
+
+# Ignore any large logs
+
+\*.log
+
+# Public docs folder is included, but if you have large generated assets you may want to exclude
+
+# public/docs/

@@ -5,6 +5,8 @@ const nextConfig = {
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   // prevent Next from inferring the workspace root and modifying tsconfig
   outputFileTracingRoot: __dirname,
+  // produce a standalone server build to reduce serverless bundle size
+  output: "standalone",
   // during dependency upgrades, TypeScript/ESLint errors may break the build;
   // allow building while you fix type/lint issues separately
   typescript: {
