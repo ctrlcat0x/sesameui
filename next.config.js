@@ -6,7 +6,9 @@ const nextConfig = {
   // prevent Next from inferring the workspace root and modifying tsconfig
   outputFileTracingRoot: __dirname,
   // produce a standalone server build to reduce serverless bundle size
-  output: "standalone",
+  // ENABLE_STANDALONE=true can be used in CI/Unix environments. Windows local
+  // builds may fail when Next tries to create symlinks into `.next/standalone`.
+  output: process.env.ENABLE_STANDALONE === "true" ? "standalone" : undefined,
   // during dependency upgrades, TypeScript/ESLint errors may break the build;
   // allow building while you fix type/lint issues separately
   typescript: {

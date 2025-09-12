@@ -18,22 +18,38 @@ export async function getDocFromParams(props: DocPageProps): Promise<Doc> {
       ? await maybeParams
       : maybeParams || {}
 
-  // `params.slug` may be a Promise as well. Resolve it safely.
+  // `params.slug` may be a Promise as well. Resolve it safely and normalize
+  // segments so URL-encoded backslashes (%5C) or platform backslashes become
+  // forward slashes. This prevents building invalid paths on Windows like
+  // `components%5Cimage%5Cparallax-floating.mdx`.
   let slug: string[] = []
   const maybeSlug = resolvedParams.slug
 
+  const normalizeSegment = (s: unknown) =>
+    String(s)
+      // decode any percent-encoded characters (e.g. %5C -> \)
+      .split("/")
+      .map((part) => decodeURIComponent(part))
+      .join("/")
+      // normalize backslashes to forward slashes
+      .replace(/\\/g, "/")
+      // split into segments and remove empty parts
+      .split("/")
+      .filter(Boolean)
+
   if (Array.isArray(maybeSlug)) {
-    slug = maybeSlug
+    slug = maybeSlug.flatMap((s) => normalizeSegment(s))
   } else if (typeof maybeSlug === "string") {
-    slug = maybeSlug.split("/")
+    slug = normalizeSegment(maybeSlug)
   } else if (maybeSlug && typeof (maybeSlug as any).then === "function") {
     // await if slug is a Promise
     const awaited = await (maybeSlug as any)
-    slug = Array.isArray(awaited) ? awaited : String(awaited).split("/")
+    slug = Array.isArray(awaited)
+      ? awaited.flatMap((s) => normalizeSegment(s))
+      : normalizeSegment(String(awaited))
   } else if (maybeSlug) {
-    // fallback: coerce to array and normalize backslashes
-    const raw = String(maybeSlug)
-    slug = raw.replace(/\\/g, "/").split("/")
+    // fallback: coerce to array and normalize
+    slug = normalizeSegment(String(maybeSlug))
   }
 
   const sourcePath =

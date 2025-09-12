@@ -1,6 +1,7 @@
 # Ignore local pnpm store and git objects
 
 .pnpm-store/
+.pnpm-store/\*\*
 .pnpm/
 .git/
 
