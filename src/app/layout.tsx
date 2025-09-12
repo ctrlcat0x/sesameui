@@ -22,11 +22,11 @@ export const metadata: Metadata = {
   ],
   authors: [
     {
-      name: "Daniel Petho",
-      url: "https://danielpetho.com",
+      name: "ctrlcat0x & shrey kuvera",
+      url: "https://github.com/sesameui",
     },
   ],
-  creator: "danielpetho",
+  creator: "ctrlcat0x & shrey kuvwera",
   openGraph: {
     type: "website",
     locale: "en_US",

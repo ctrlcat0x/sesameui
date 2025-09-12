@@ -1,12 +1,12 @@
 "use client"
 
 import * as React from "react"
+import { registry } from "@/sesame/index"
 import { Repeat } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Icons } from "@/components/icons"
-import { registry } from "@/fancy/index"
 
 import { CodeSnippet } from "./code-snippet"
 import { RestartButton } from "./restart-button"

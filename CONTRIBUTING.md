@@ -26,17 +26,17 @@ src
 ├── app
 ├── components
 ├── content
-└── fancy
+└── sesame
     ├── components
     └── examples
 ```
 
-| Path                  | Description                                                        |
-| --------------------- | ------------------------------------------------------------------ |
-| `src/app`             | The Next.js application for the website.                           |
-| `src/components`      | The React components for the website (excluding fancy components). |
-| `src/content`         | The content and component documentations for the website.          |
-| `src/fancy`           | The registry, source code, and demos for the fancy components.     |
+| Path             | Description                                                         |
+| ---------------- | ------------------------------------------------------------------- |
+| `src/app`        | The Next.js application for the website.                            |
+| `src/components` | The React components for the website (excluding sesame components). |
+| `src/content`    | The content and component documentations for the website.           |
+| `src/sesame`     | The registry, source code, and demos for the sesame components.     |
 
 ## Development
 
@@ -47,13 +47,13 @@ You can fork this repo by clicking the fork button in the top right corner of th
 ### Clone on your local machine
 
 ```bash
-git clone https://github.com/your-username/fancy.git
+git clone https://github.com/your-username/sesame.git
 ```
 
 ### Navigate to project directory
 
 ```bash
-cd fancy
+cd sesame
 ```
 
 ### Create a new Branch
@@ -90,22 +90,23 @@ If you think your component is a good fit, read on.
 
 1. Navigate to the `src/content/docs/components` directory. This directory divides the components into different categories, such as `text`, `background`, `blocks`, etc. This is somewhat an arbitrary decision, but it helps us organize the components better. Choose one category, or create a new one if you think it's appropriate.
 2. Create the component inside the chosen folder. Make sure to use the correct [tech stack](./ACCEPTANCE_CRITERIA.md#stack). Comments are appreciated, but not required.
-3. If you're using new dependencies, feel free to install them in the `package.json` file. 
+3. If you're using new dependencies, feel free to install them in the `package.json` file.
 4. If you're using new hooks, please add them to the `src/hooks` directory.
 5. If you're using new utilities, please add them to the `src/utils` directory, unless you want them in the same file as the component.
 6. When importing hooks and utilities, always use the `@/hooks` and `@/utils` path aliases (e.g. `import { useHook } from "@/hooks/use-hook"`). This is crucial because the registry build script looks for these specific import paths in the source code to determine which files and dependencies to include in the generated registry. Without the correct import paths, the CLI installation won't work properly.
-7. Please add yourself (or others if there are multiple ones) as the author in all files as a comment, in the following format: `// author: author_1 <https://x.com/author_1>, author_2 <https://x.com/author_2?`. Please refer to [this example](./src/fancy/components/blocks/stacking-cards.tsx) for reference.
+7. Please add yourself (or others if there are multiple ones) as the author in all files as a comment, in the following format: `// author: author_1 <https://x.com/author_1>, author_2 <https://x.com/author_2?`. Please refer to [this example](./src/sesame/components/blocks/stacking-cards.tsx) for reference.
 
-Some things cannot be fetched from the source file, such as: 
- - CSS variables, if applicable.
- - The component's dev dependencies (eg. types for matter-js), if applicable.
- - The component's additional dependencies, which aren't listed in the source file of the component, but are required for the component to work properly.
+Some things cannot be fetched from the source file, such as:
 
-Therefore, you need to add these config in a .json file with the same name as the component, next to the component .tsx file. The schema for this json is defined the [registry schema file](./src/fancy/schema.ts). Please, refer to [this example](./src/fancy/components/blocks/circling-elements.json) (additional css config) and [this example](./src/fancy/components/text/gravity.json) (additional dependencies) for reference.
+- CSS variables, if applicable.
+- The component's dev dependencies (eg. types for matter-js), if applicable.
+- The component's additional dependencies, which aren't listed in the source file of the component, but are required for the component to work properly.
+
+Therefore, you need to add these config in a .json file with the same name as the component, next to the component .tsx file. The schema for this json is defined the [registry schema file](./src/sesame/schema.ts). Please, refer to [this example](./src/sesame/components/blocks/circling-elements.json) (additional css config) and [this example](./src/sesame/components/text/gravity.json) (additional dependencies) for reference.
 
 ### 2. Component demo(s)
 
-1. Navigate to the `src/fancy/examples` directory.
+1. Navigate to the `src/sesame/examples` directory.
 2. In the same category folder as the component source, create a new file for the component demo. The file name should be the component name in kebab-case, ideally followed by `-demo`. If applicable, you can create multiple demos and examples, showing different use cases or variations of the component.
 
 ### 3. Generate source
@@ -145,7 +146,7 @@ Please, have a look at an [existing component](./src/content/docs/components/blo
 
 In the `src/config/docs.ts` file, add a new item to the `docsConfig` array, at the correct category. Please make sure to add the `href`, and `New` as the `label`.
 
-When you're done and ready to submit your PR, please create a quick recording of your work, and upload it to the PR description. It will help us to speed up the review process. Check out [this PR](https://github.com/danielpetho/fancy/pull/2) for reference.
+When you're done and ready to submit your PR, please create a quick recording of your work, and upload it to the PR description. It will help us to speed up the review process. Check out [this PR](https://github.com/danielpetho/sesame/pull/2) for reference.
 
 That's it, you're done! If you feel stuck anywhere, please don't hesitate to ask for help.
 
@@ -161,8 +162,9 @@ If you're a maintainer and want to publish Sesame to npm and host demo assets on
 4. Build and test locally: `npm run build`.
 5. Authenticate with npm: `npm login` then publish: `npm publish --access public` (for scoped packages use `--access public`).
 6. For thumbnails/demos, a CDN is recommended. Set up a provider (Bunny, Cloudflare, S3 + CloudFront, or similar).
-  - Upload demo images and videos to the CDN and set `BUNNY_CDN_URL` or similar env var used in the codebase.
-  - Ensure fallback to local `public/` is implemented for development.
+
+- Upload demo images and videos to the CDN and set `BUNNY_CDN_URL` or similar env var used in the codebase.
+- Ensure fallback to local `public/` is implemented for development.
 
 If you want me to add automated GitHub Actions for publishing or CDN upload, I can add a starter workflow.
 

@@ -18,7 +18,10 @@ Setting up Matter.js for creating physics-based animations can be a bit tricky a
 </TabsList>
 <TabsContent value="cli">
 
-<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/gravity.json&quot;" npx />
+<InstallTabs
+  command='shadcn@latest add "https://fancycomponents.dev/r/gravity.json"'
+  npx
+/>
 
 </TabsContent>
 <TabsContent value="manual">
@@ -46,21 +49,21 @@ Then, copy the component source code:
 
 ## Usage
 
-First, you need to wrap your scene / content with the `Gravity` component. Set the gravity direction vector in the `gravity` prop (default is `{x: 0, y: 1}`). Then, in order to transform your regular HTML elements into Matter bodies, you need to wrap them with the `MatterBody` component. 
+First, you need to wrap your scene / content with the `Gravity` component. Set the gravity direction vector in the `gravity` prop (default is `{x: 0, y: 1}`). Then, in order to transform your regular HTML elements into Matter bodies, you need to wrap them with the `MatterBody` component.
 
 You need to set each bodies `x` and `y` position, either as a percentage of your container size, or as a number. You do not need to set the width and height manually, everything else is taken care of by component :). High-level example:
 
 <CodeSnippet title="Gravity usage example">
-```tsx
-<Gravity>
-  <MatterBody x="50%" y="50%">
-    <div>Hello world!</div>
-  </MatterBody>
-  <MatterBody x="10%" y="10%">
-    <div>fancy!</div>
-  </MatterBody>
-</Gravity>
-```
+  ```tsx
+  <Gravity>
+    <MatterBody x="50%" y="50%">
+      <div>Hello world!</div>
+    </MatterBody>
+    <MatterBody x="10%" y="10%">
+      <div>sesame!</div>
+    </MatterBody>
+  </Gravity>
+  ```
 </CodeSnippet>
 
 ## Understanding the component
@@ -70,7 +73,6 @@ You need to set each bodies `x` and `y` position, either as a percentage of your
 At its core, the Gravity component creates and manages a Matter.js physics world. It handles:
 
 1. **Physics Setup**: Creates a canvas and initializes the Matter.js physics engine with:
-
    - A physics engine to calculate forces and collisions
    - A renderer to visualize the physics (when debug mode is enabled)
    - A runner to step the physics simulation forward
@@ -79,7 +81,6 @@ At its core, the Gravity component creates and manages a Matter.js physics world
 2. **Animation Loop**: Continuously updates the positions of your HTML elements to match their physics bodies in the Matter.js world. This creates the illusion that your DOM elements are actually affected by physics.
 
 3. **Controls**: Exposes three main methods:
-
    - `start()`: Begins the physics simulation
    - `stop()`: Pauses the physics simulation
    - `reset()`: Returns all elements to their starting positions
@@ -93,15 +94,14 @@ The `MatterBody` component transforms regular HTML elements into physics-enabled
 - **Positioning**: Set initial positions with `x` and `y` props
 
 <CodeSnippet title="Matter Body ">
-```
-<MatterBody x="50%" y="100px">
-  <div>I'm physics-enabled!</div>
-</MatterBody>
-```
+  ```
+  <MatterBody x="50%" y="100px">
+    <div>I'm physics-enabled!</div>
+  </MatterBody>
+  ```
 </CodeSnippet>
 
 - **Body Types**: Choose between different physics shapes:
-
   - `rectangle`: Default, good for most elements
   - `circle`: Perfect for round elements
   - `svg`: For complex custom shapes
@@ -109,20 +109,20 @@ The `MatterBody` component transforms regular HTML elements into physics-enabled
 - **Physics Properties**: Customize how elements behave with `matterBodyOptions`. The most commonly used options are:
 
 <CodeSnippet title="Matter Body options">
-```tsx
-<MatterBody 
-  matterBodyOptions={{ 
-    friction: 0.5,     // How slippery it is
-    restitution: 0.7,  // How bouncy it is
-    density: 0.001,    // How heavy it is
-    isStatic: false,   // If true, the element won't move but can be collided with
-    force: { x: 0, y: 0 } // Initial force applied to the body
-    // ... 
-  }}
->
-  <div>I'm bouncy!</div>
-</MatterBody>
-```
+  ```tsx
+  <MatterBody
+    matterBodyOptions={{
+      friction: 0.5, // How slippery it is
+      restitution: 0.7, // How bouncy it is
+      density: 0.001, // How heavy it is
+      isStatic: false, // If true, the element won't move but can be collided with
+      force: { x: 0, y: 0 }, // Initial force applied to the body
+      // ...
+    }}
+  >
+    <div>I'm bouncy!</div>
+  </MatterBody>
+  ```
 </CodeSnippet>
 
 For a complete list of options, check out the [Matter.js Body documentation](https://brm.io/matter-js/docs/classes/Body.html#properties). You can fine-tune everything from angular velocity to mass to create exactly the physics behavior you want.
@@ -169,7 +169,6 @@ As you can see in the demo above, SVG bodies can produce varying results. Simple
 This variance in quality stems from the challenging process of converting SVG paths to physics bodies. Therefore, there are a few caveats to keep in mind:
 
 1. **SVG Requirements**:
-
    - Keep them simple. The simpler the SVG, the better the decomposition, and the simulation.
    - It's only tested with single-path SVGs, and it probably won't work with nested paths.
    - Avoid shapes with holes or complex curves, or shapes that are seem to be too complex to decompose into polygons.

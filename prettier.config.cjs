@@ -19,7 +19,7 @@ module.exports = {
     "^@/hooks/(.*)$",
     "^@/components/ui/(.*)$",
     "^@/components/(.*)$",
-    "^@/fancy/(.*)$",
+    "^@/sesame/(.*)$",
     "^@/styles/(.*)$",
     "^@/app/(.*)$",
     "",

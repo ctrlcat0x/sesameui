@@ -73,28 +73,37 @@ const getToc = () => (node, file) => {
 }
 
 function preprocessContentForToc(content: string): string {
-  // Remove frontmatter section
-  let processed = content.replace(/^---[\s\S]*?---\n/, "")
-  
+  // Remove frontmatter section (handle Windows CRLF and optional trailing whitespace)
+  let processed = content.replace(/^---[\r\n][\s\S]*?[\r\n]---[\r\n]?/m, "")
+
   // Remove JSX components that break markdown parsing
   // Remove CodeSnippet components and their content
-  processed = processed.replace(/<CodeSnippet[^>]*>[\s\S]*?<\/CodeSnippet>/g, "")
-  
-  // Remove Table components and their content  
+  processed = processed.replace(
+    /<CodeSnippet[^>]*>[\s\S]*?<\/CodeSnippet>/g,
+    ""
+  )
+
+  // Remove Table components and their content
   processed = processed.replace(/<Table>[\s\S]*?<\/Table>/g, "")
-  
+
   // Remove other JSX components but keep their content if they're inline
   processed = processed.replace(/<ComponentPreview[^>]*\/>/g, "")
   processed = processed.replace(/<ComponentSource[^>]*\/>/g, "")
   processed = processed.replace(/<InstallTabs[^>]*\/>/g, "")
   processed = processed.replace(/<Tabs[^>]*>[\s\S]*?<\/Tabs>/g, "")
-  
+
   // Remove self-closing JSX tags
   processed = processed.replace(/<[A-Z][^>]*\/>/g, "")
-  
+
   // Remove opening/closing JSX tags but keep content
   processed = processed.replace(/<\/?[A-Z][^>]*>/g, "")
-  
+
+  // Remove stray YAML-like lines that might survive (e.g., 'title: ...', 'description:') at start
+  processed = processed
+    .split("\n")
+    .filter((line) => !/^[A-Za-z0-9_-]+:\s*/.test(line.trim()))
+    .join("\n")
+
   return processed
 }
 

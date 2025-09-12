@@ -111,7 +111,7 @@ export default async function DocPage({ params }: DocPageProps) {
     : "Getting Started"
 
   // Generate current URL for markdown links using the resolved slug
-  const currentUrl = `https://fancycomponents.dev/docs/${doc.slug || ""}`
+  const currentUrl = `https://sesameui.vercel.app/docs/${doc.slug || ""}`
 
   // Extract plain text content from the page (simplified version)
   // For now, using description. Could be enhanced to extract more content client-side
@@ -119,7 +119,7 @@ export default async function DocPage({ params }: DocPageProps) {
 
   return (
     <main className="xl:grid xl:grid-cols-[minmax(0,1fr)_340px] justify-center w-full">
-      <div className="rounded-2xl bg-background py-6 lg:gap-10 lg:py-6 border-border border">
+      <div className="rounded-2xl bg-background py-6 lg:gap-10 lg:py-6">
         <div data-algolia-crawl className="px-4 md:px-8 flex flex-col">
           <div className="flex items-start justify-between gap-4">
             <DocBreadcrumb componentType={componentType} title={doc.title} />

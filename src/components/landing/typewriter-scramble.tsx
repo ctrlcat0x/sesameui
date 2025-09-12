@@ -1,5 +1,5 @@
-import ScrambleHover from "@/fancy/components/text/scramble-hover"
-import Typewriter from "@/fancy/components/text/typewriter"
+import ScrambleHover from "@/sesame/components/text/scramble-hover"
+import Typewriter from "@/sesame/components/text/typewriter"
 
 export function TypewriterPreview() {
   return (

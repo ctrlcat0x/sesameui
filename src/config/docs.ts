@@ -24,11 +24,6 @@ export const docsConfig: SidebarNavItem[] = [
         href: "/docs/changelog",
         items: [],
       },
-      {
-        title: "llms.txt",
-        href: "/llms.txt",
-        items: [],
-      }
     ],
   },
 
@@ -135,7 +130,7 @@ export const docsConfig: SidebarNavItem[] = [
         title: "Text Along Path",
         href: "/docs/components/text/text-along-path",
         items: [],
-      }
+      },
     ],
   },
   {
@@ -146,7 +141,7 @@ export const docsConfig: SidebarNavItem[] = [
         title: "Box Carousel",
         href: "/docs/components/carousel/box-carousel",
         items: [],
-        label: "New"
+        label: "New",
       },
     ],
   },
@@ -216,7 +211,7 @@ export const docsConfig: SidebarNavItem[] = [
         title: "Pixelate SVG Filter",
         href: "/docs/components/filter/pixelate-svg-filter",
         items: [],
-      }
+      },
     ],
   },
 

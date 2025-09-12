@@ -34,12 +34,6 @@ const nextConfig = {
         hostname: "musicbrainz.org",
         pathname: "/**",
       },
-      {
-        protocol: "https",
-        hostname: "fancycomponents.b-cdn.net",
-        port: "",
-        pathname: "/**",
-      },
     ],
   },
 }

@@ -1,10 +1,11 @@
 "use client"
 
-import React, { useEffect, useMemo, useRef, useState } from "react"
-import dynamic from "next/dynamic"
-import { Search as LucideSearch, X as LucideX } from "lucide-react"
-
-import { DocSearchHit } from "./doc-search-hit"
+import React, { useEffect, useRef, useState } from "react"
+import {
+  File as LucideFile,
+  Search as LucideSearch,
+  X as LucideX,
+} from "lucide-react"
 
 type DocItem = {
   slug: string
@@ -40,6 +41,7 @@ export default function LocalSearch() {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState(0)
+  const resultsRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     fetch("/search-index.json")
@@ -202,6 +204,29 @@ export default function LocalSearch() {
     return () => window.removeEventListener("keydown", onKey)
   }, [open, results, selected])
 
+  // Keep selected within bounds when results change
+  useEffect(() => {
+    if (selected >= results.length) {
+      setSelected(Math.max(0, results.length - 1))
+    }
+  }, [results, selected])
+
+  // Scroll the selected item into view within the results container
+  useEffect(() => {
+    if (!resultsRef.current) return
+    const el = resultsRef.current.querySelector(
+      `[data-index=\"${selected}\"]`
+    ) as HTMLElement | null
+    if (el) {
+      // scroll the item into view, nearest keeps it within viewport without jumping
+      el.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+        behavior: "smooth",
+      })
+    }
+  }, [selected, results, open])
+
   return (
     <>
       <button
@@ -249,40 +274,55 @@ export default function LocalSearch() {
               </button>
             </div>
 
-            <div className="max-h-[60vh] overflow-y-auto m-2 rounded-lg border border-border">
+            <div
+              ref={resultsRef}
+              className="max-h-[60vh] overflow-y-auto m-2 rounded-lg border border-border"
+            >
               {results.length === 0 && query ? (
                 <div className="p-4 text-muted-foreground">No results</div>
               ) : (
                 results.map((hit, i) => (
                   <div
                     key={i}
+                    data-index={i}
                     className={`cursor-pointer ${i === selected ? "bg-input/60" : ""}`}
                     onClick={() => (window.location.href = hit.url)}
                   >
-                    <div className="p-4">
-                      <div className="text-sm font-medium">
-                        {/* attempt to highlight title */}
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: hit.hierarchy?.lvl1
-                              ? query
-                                ? highlight(hit.hierarchy.lvl1, query)
-                                : hit.hierarchy.lvl1
-                              : query
-                                ? highlight(
-                                    hit._snippetResult?.content?.value ||
-                                      hit.content ||
-                                      "",
-                                    query
-                                  )
-                                : hit._snippetResult?.content?.value ||
-                                  hit.content ||
-                                  "",
-                          }}
-                        />
+                    <div className="flex items-center p-3 gap-3">
+                      <div className="w-8 flex-shrink-0 flex items-center justify-center text-muted-foreground">
+                        <LucideFile className="w-4 h-4" />
                       </div>
-                      <div className="text-xs pl-1 text-muted-foreground">
-                        {hit.hierarchy?.lvl2 || hit.hierarchy?.lvl1}
+                      <div className="min-w-0 flex-1">
+                        <div className="text-sm font-medium truncate">
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: hit.hierarchy?.lvl1
+                                ? query
+                                  ? highlight(hit.hierarchy.lvl1, query)
+                                  : hit.hierarchy.lvl1
+                                : query
+                                  ? highlight(
+                                      hit._snippetResult?.content?.value ||
+                                        hit.content ||
+                                        "",
+                                      query
+                                    )
+                                  : hit._snippetResult?.content?.value ||
+                                    hit.content ||
+                                    "",
+                            }}
+                          />
+                        </div>
+                        <div className="text-xs text-muted-foreground truncate">
+                          {hit.hierarchy?.lvl2 || hit.hierarchy?.lvl1}
+                        </div>
+                      </div>
+                      <div className="flex items-center flex-shrink-0 pl-3">
+                        {i === selected && (
+                          <kbd className="inline-flex items-center justify-center rounded-md bg-muted px-2 py-1 text-xs font-medium text-muted-foreground">
+                            Enter
+                          </kbd>
+                        )}
                       </div>
                     </div>
                   </div>

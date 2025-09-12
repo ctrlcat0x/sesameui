@@ -10,7 +10,7 @@ Artworks from [Cosmos](https://www.cosmos.so/danielpetho/gradients/).
 
 ## Credits
 
-This component is inspired by [this scroll example](https://codesandbox.io/p/sandbox/framer-motion-scroll-velocity-r1dy4u?from-embed) by Motion. 
+This component is inspired by [this scroll example](https://codesandbox.io/p/sandbox/framer-motion-scroll-velocity-r1dy4u?from-embed) by Motion.
 
 ## Installation
 
@@ -22,7 +22,10 @@ This component is inspired by [this scroll example](https://codesandbox.io/p/san
 </TabsList>
 <TabsContent value="cli">
 
-<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/simple-marquee.json&quot;" npx />
+<InstallTabs
+  command='shadcn@latest add "https://fancycomponents.dev/r/simple-marquee.json"'
+  npx
+/>
 
 </TabsContent>
 <TabsContent value="manual">
@@ -38,7 +41,7 @@ You only need to wrap your elements with the `SimpleMarquee` component, everythi
 
 ## Understanding the component
 
-Unlike most marquee implementations that use simple CSS animations, this component uses Motion's `useAnimationFrame` hook to provide more control over the animation. This allows for a bunch of fancy effects, such as:
+Unlike most marquee implementations that use simple CSS animations, this component uses Motion's `useAnimationFrame` hook to provide more control over the animation. This allows for a bunch of sesame effects, such as:
 
 - Changing velocity and direction by dragging
 - Adjusting speed in response to scrolling
@@ -52,20 +55,15 @@ The main magic of this component is the `useAnimationFrame` hook from Motion, wh
 1. We create motion values (using `useMotionValue`) to track the x or y position:
 
 <CodeSnippet title="Motion values">
-```tsx
-const baseX = useMotionValue(0)
-const baseY = useMotionValue(0)
-```
+  ```tsx const baseX = useMotionValue(0) const baseY = useMotionValue(0) ```
 </CodeSnippet>
 
 2. We define a `baseVelocity` prop that determines the default speed and direction:
 
 <CodeSnippet title="Base velocity">
-```tsx
-  // Convert baseVelocity to the correct direction
-  const actualBaseVelocity =
-    direction === "left" || direction === "up" ? -baseVelocity : baseVelocity
-```
+  ```tsx // Convert baseVelocity to the correct direction const
+  actualBaseVelocity = direction === "left" || direction === "up" ?
+  -baseVelocity : baseVelocity ```
 </CodeSnippet>
 
 3. On each animation frame inside the `useAnimationFrame` hook, we increment the position values, by adding that velocity to the current position:
@@ -76,11 +74,12 @@ const baseY = useMotionValue(0)
 let moveBy = directionFactor.current * baseVelocity * (delta / 1000)
 
 if (isHorizontal) {
-  baseX.set(baseX.get() + moveBy)
+baseX.set(baseX.get() + moveBy)
 } else {
-  baseY.set(baseY.get() + moveBy)
+baseY.set(baseY.get() + moveBy)
 }
-```
+
+````
 </CodeSnippet>
 
 4. Since we're constantly increasing/decreasing that value, at some point our elements would move out far away from the viewport. Therefore, we use the `useTransform` hook to convert that x/y value to a percentage, and wrapping it between 0 and -100. With this, we essentially force our elements to always move from 0 to -100. Once they reach -100, they will start their journey from 0% again.
@@ -93,7 +92,8 @@ const x = useTransform(baseX, (v) => {
   // Apply easing if provided, otherwise use linear
   return `${easing ? easing(wrappedValue / -100) * -100 : wrappedValue}%`
 })
-```
+````
+
 </CodeSnippet>
 
 5. The `wrap` helper function ensures values stay between 0 and -100:
@@ -118,9 +118,8 @@ As you can see above, elements eventually leave the container and jump back to t
 We can solve this by using the `repeat` prop to duplicate all child elements multiple times inside the component:
 
 <CodeSnippet title="Repeat example">
-```tsx
-{
-  Array.from({ length: repeat }, (_, i) => i).map((i) => (
+  ```tsx
+  {Array.from({ length: repeat }, (_, i) => i).map((i) => (
     <motion.div
       key={i}
       className={cn(
@@ -133,9 +132,8 @@ We can solve this by using the `repeat` prop to duplicate all child elements mul
     >
       {children}
     </motion.div>
-  ))
-}
-```
+  ))}
+  ```
 </CodeSnippet>
 
 By default, the `repeat` value is 3, which means your content is duplicated three times. With enough repetitions, new elements enter the visible area before existing ones leave, creating an illusion of continuous animation. Try increasing the `repeat` value in the demo above to see how it eliminates the jumpiness.
@@ -156,6 +154,7 @@ const hoverFactorValue = useMotionValue(1)
 const smoothHoverFactor = useSpring(hoverFactorValue, slowDownSpringConfig)
 
 // In component JSX
+
 <motion.div
   onHoverStart={() => (isHovered.current = true)}
   onHoverEnd={() => (isHovered.current = false)}
@@ -166,23 +165,24 @@ const smoothHoverFactor = useSpring(hoverFactorValue, slowDownSpringConfig)
 
 // In animation frame
 if (isHovered.current) {
-  hoverFactorValue.set(slowdownOnHover ? slowDownFactor : 1)
+hoverFactorValue.set(slowdownOnHover ? slowDownFactor : 1)
 } else {
-  hoverFactorValue.set(1)
+hoverFactorValue.set(1)
 }
 
 // Apply the hover factor to movement calculation
-let moveBy = directionFactor.current *
-             actualBaseVelocity *
-             (delta / 1000) *
-             smoothHoverFactor.get()
-```
+let moveBy = directionFactor.current _
+actualBaseVelocity _
+(delta / 1000) \*
+smoothHoverFactor.get()
+
+````
 </CodeSnippet>
 
 Key props for this feature:
 
 - `slowDownFactor` controls how much to slow down (default: 0.3 or 30% of original speed)
-- `smoothHoverFactor` uses spring physics for smooth transitions between speeds. This ensures that the velocity change is not happening instantly, but with a smooth animation. For this, we use the `useSpring` hook from Motion. 
+- `smoothHoverFactor` uses spring physics for smooth transitions between speeds. This ensures that the velocity change is not happening instantly, but with a smooth animation. For this, we use the `useSpring` hook from Motion.
 - `slowDownSpringConfig` lets you customize the spring animation parameters. Please refer to the [Motion documentation](https://motion.dev/docs/react-use-spring) for more details.
 
 ### Scroll-Based Velocity
@@ -217,7 +217,8 @@ if (scrollAwareDirection && !isDragging.current) {
     directionFactor.current = 1
   }
 }
-```
+````
+
 </CodeSnippet>
 
 This creates an interactive effect where:
@@ -258,44 +259,45 @@ const dragVelocity = useRef(0)
 const lastPointerPosition = useRef({ x: 0, y: 0 })
 
 const handlePointerDown = (e: React.PointerEvent) => {
-  if (!draggable) return
-  // Capture pointer events
-  (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+if (!draggable) return
+// Capture pointer events
+(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
 
-  if (grabCursor) {
-    (e.currentTarget as HTMLElement).style.cursor = "grabbing"
-  }
+if (grabCursor) {
+(e.currentTarget as HTMLElement).style.cursor = "grabbing"
+}
 
-  isDragging.current = true
-  lastPointerPosition.current = { x: e.clientX, y: e.clientY }
+isDragging.current = true
+lastPointerPosition.current = { x: e.clientX, y: e.clientY }
 
-  // Pause automatic animation
-  dragVelocity.current = 0
+// Pause automatic animation
+dragVelocity.current = 0
 }
 
 const handlePointerMove = (e: React.PointerEvent) => {
-  if (!draggable || !isDragging.current) return
+if (!draggable || !isDragging.current) return
 
-  const currentPosition = { x: e.clientX, y: e.clientY }
+const currentPosition = { x: e.clientX, y: e.clientY }
 
-  // Calculate movement delta
-  const deltaX = currentPosition.x - lastPointerPosition.current.x
-  const deltaY = currentPosition.y - lastPointerPosition.current.y
+// Calculate movement delta
+const deltaX = currentPosition.x - lastPointerPosition.current.x
+const deltaY = currentPosition.y - lastPointerPosition.current.y
 
-  // Support for angled dragging
-  const angleInRadians = (dragAngle * Math.PI) / 180
-  const directionX = Math.cos(angleInRadians)
-  const directionY = Math.sin(angleInRadians)
+// Support for angled dragging
+const angleInRadians = (dragAngle \* Math.PI) / 180
+const directionX = Math.cos(angleInRadians)
+const directionY = Math.sin(angleInRadians)
 
-  // Project movement along angle direction
-  const projectedDelta = deltaX * directionX + deltaY * directionY
+// Project movement along angle direction
+const projectedDelta = deltaX _ directionX + deltaY _ directionY
 
-  // Set drag velocity
-  dragVelocity.current = projectedDelta * dragSensitivity
+// Set drag velocity
+dragVelocity.current = projectedDelta \* dragSensitivity
 
-  lastPointerPosition.current = currentPosition
+lastPointerPosition.current = currentPosition
 }
-```
+
+````
 </CodeSnippet>
 
 During animation frames, dragging takes precedence over other movement factors. Meaning, when the user is dragging, the marquee will move according to the drag velocity, and we ignore all other factors (such as the hover, scroll and the basic velocity).
@@ -320,33 +322,31 @@ if (isDragging.current && draggable) {
 
   return
 }
-```
+````
+
 </CodeSnippet>
 
 When the user stops dragging, velocity gradually decays back to the base velocity. You can customize the decay factor using the `dragVelocityDecay` prop.
 
 <CodeSnippet title="Drag velocity decay">
-```tsx
-// Gradually decay drag velocity back to zero
-if (!isDragging.current && Math.abs(dragVelocity.current) > 0.01) {
-  dragVelocity.current *= dragVelocityDecay
-} else if (!isDragging.current) {
-  dragVelocity.current = 0
-}
-```
+  ```tsx // Gradually decay drag velocity back to zero if (!isDragging.current
+  && Math.abs(dragVelocity.current) > 0.01){" "}
+  {(dragVelocity.current *= dragVelocityDecay)} else if (!isDragging.current){" "}
+  {(dragVelocity.current = 0)}
+  ```
 </CodeSnippet>
 
 The component also supports changing direction based on drag movement:
 
 <CodeSnippet title="Drag direction">
-```tsx
-// Update direction based on drag direction
-if (dragAwareDirection && Math.abs(dragVelocity.current) > 0.1) {
-  // If dragging in negative direction, set directionFactor to -1
-  // If dragging in positive direction, set directionFactor to 1
-  directionFactor.current = Math.sign(dragVelocity.current)
-}
-```
+  ```tsx // Update direction based on drag direction if (dragAwareDirection &&
+  Math.abs(dragVelocity.current) > 0.1){" "}
+  {
+    // If dragging in negative direction, set directionFactor to -1
+    // If dragging in positive direction, set directionFactor to 1
+    (directionFactor.current = Math.sign(dragVelocity.current))
+  }
+  ```
 </CodeSnippet>
 
 <ComponentPreview name="simple-marquee-drag-demo" />
@@ -371,7 +371,8 @@ const directionX = Math.cos(angleInRadians)
 const directionY = Math.sin(angleInRadians)
 
 // Project the movement onto the angle direction
-const projectedDelta = deltaX * directionX + deltaY * directionY
+const projectedDelta = deltaX _ directionX + deltaY _ directionY
+
 ```
 </CodeSnippet>
 
@@ -450,7 +451,7 @@ const projectedDelta = deltaX * directionX + deltaY * directionY
       <TableCell>`{ damping: 50, stiffness: 400 }`</TableCell>
       <TableCell>
         The spring config for the slow down animation
-      </TableCell> 
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableCell>useScrollVelocity</TableCell>
@@ -520,3 +521,4 @@ const projectedDelta = deltaX * directionX + deltaY * directionY
     </TableRow>
   </TableBody>
 </Table>
+```

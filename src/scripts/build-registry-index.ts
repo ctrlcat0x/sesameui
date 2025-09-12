@@ -4,7 +4,7 @@ const fs = require("fs")
 const path = require("path")
 
 // @ts-ignore
-const baseDir = path.join(__dirname, "..", "fancy")
+const baseDir = path.join(__dirname, "..", "sesame")
 const componentsDir = path.join(baseDir, "components")
 const examplesDir = path.join(baseDir, "examples")
 const hooksDir = path.join(__dirname, "..", "hooks")
@@ -34,15 +34,29 @@ interface RegistryItem {
   author?: string
 }
 
-function getAuthor(componentName: string, type: "ui" | "example" | "hook" | "util"): string {
-  const defaultAuthor = "daniel petho <https://www.danielpetho.com>"
-  
+function getAuthor(
+  componentName: string,
+  type: "ui" | "example" | "hook" | "util"
+): string {
+  const defaultAuthor =
+    "ctrlcat0x & shrey kuvwera <https://github.com/ctrlcat0x>"
+
   // Get the source file path based on type
   let sourceFilePath
   if (type === "example") {
-    sourceFilePath = path.join(baseDir, "examples", "blocks", `${componentName}.tsx`)
+    sourceFilePath = path.join(
+      baseDir,
+      "examples",
+      "blocks",
+      `${componentName}.tsx`
+    )
   } else if (type === "ui") {
-    sourceFilePath = path.join(baseDir, "components", "blocks", `${componentName}.tsx`)
+    sourceFilePath = path.join(
+      baseDir,
+      "components",
+      "blocks",
+      `${componentName}.tsx`
+    )
   } else if (type === "hook") {
     sourceFilePath = path.join(__dirname, "..", "hooks", `${componentName}.ts`)
   } else if (type === "util") {
@@ -80,9 +94,9 @@ function findHookImports(sourceCode: string): string[] {
 }
 
 function findComponentImports(sourceCode: string): string[] {
-  // Match static imports from @/fancy/components/ or @/fancy/examples/
+  // Match static imports from @/sesame/components/ or @/sesame/examples/
   const componentImportRegex =
-    /import\s+([^'"]+?)\s+from\s+['"]@\/fancy\/(components|examples)\/([^'"]+)['"]/g
+    /import\s+([^'"]+?)\s+from\s+['"]@\/sesame\/(components|examples)\/([^'"]+)['"]/g
   const components: string[] = []
   let match
 
@@ -104,7 +118,7 @@ function findComponentImports(sourceCode: string): string[] {
       .replace(/^-/, "")
 
     if (basePath !== currentComponent) {
-      components.push(`fancy/${basePath}`)
+      components.push(`sesame/${basePath}`)
     }
   }
 
@@ -116,12 +130,12 @@ function findComponentImports(sourceCode: string): string[] {
 }
 
 // ---------------------------------------------------------------------------
-// helper to detect dynamic imports, e.g. dynamic(() => import("@/fancy/..."))
+// helper to detect dynamic imports, e.g. dynamic(() => import("@/sesame/..."))
 function findDynamicComponentImports(sourceCode: string): string[] {
-  // Looks for lines like: dynamic(() => import("@/fancy/components/..."))
-  // Capture the part after "@/fancy/{components|examples}/"
+  // Looks for lines like: dynamic(() => import("@/sesame/components/..."))
+  // Capture the part after "@/sesame/{components|examples}/"
   const dynamicImportRegex =
-    /dynamic\(\s*\(\)\s*=>\s*import\(\s*['"]@\/fancy\/(components|examples)\/([^'"]+)['"]\s*\)/g
+    /dynamic\(\s*\(\)\s*=>\s*import\(\s*['"]@\/sesame\/(components|examples)\/([^'"]+)['"]\s*\)/g
   const dynComponents: string[] = []
   let match
 
@@ -132,7 +146,7 @@ function findDynamicComponentImports(sourceCode: string): string[] {
       .replace(/([A-Z])/g, "-$1")
       .toLowerCase()
       .replace(/^-/, "")
-    dynComponents.push(`fancy/${componentName}`)
+    dynComponents.push(`sesame/${componentName}`)
   }
 
   return dynComponents
@@ -221,8 +235,8 @@ function generateRegistryItem(
     type === "hook"
       ? "@/hooks/"
       : type === "example"
-        ? "@/fancy/examples/"
-        : "@/fancy/components/"
+        ? "@/sesame/examples/"
+        : "@/sesame/components/"
   const importPath = `${basePath}${relativePath}`.replace(/\\/g, "/")
   const importPathWithoutExt = importPath.replace(/\.tsx?$/, "")
 
@@ -253,7 +267,7 @@ function generateRegistryItem(
       case "example":
         return `examples/${pathWithoutExt}`
       case "ui":
-        return `fancy/${pathWithoutExt}`
+        return `sesame/${pathWithoutExt}`
       case "util":
         return `utils/${pathWithoutExt}`
     }
@@ -414,18 +428,18 @@ function traverseDirectory(
 }
 
 // Generate both registries
-const fancy = traverseDirectory(componentsDir, "ui")
+const sesame = traverseDirectory(componentsDir, "ui")
 const example = traverseDirectory(examplesDir, "example")
 const hooks = traverseDirectory(hooksDir, "hook")
 const utils = traverseDirectory(utilsDir, "util")
 
 // Generate the final index.ts content
 const content = `import * as React from "react";
-import { Registry } from "@/fancy/schema";
+import { Registry } from "@/sesame/schema";
 
 // This file is generated automatically. Do not edit it manually.
 
-const fancy: Registry = ${JSON.stringify(fancy, null, 2)};
+const sesame: Registry = ${JSON.stringify(sesame, null, 2)};
 
 const example: Registry = ${JSON.stringify(example, null, 2)};
 
@@ -434,7 +448,7 @@ const hooks: Registry = ${JSON.stringify(hooks, null, 2)};
 const utils: Registry = ${JSON.stringify(utils, null, 2)};
 
 export const registry = {
-  ...fancy,
+  ...sesame,
   ...example,
   ...hooks,
   ...utils,
@@ -470,7 +484,7 @@ function createCleanRegistry(registry: any) {
 
 // Generate and write the index.json file
 const cleanRegistry = {
-  ...createCleanRegistry(fancy),
+  ...createCleanRegistry(sesame),
   ...createCleanRegistry(example),
   ...createCleanRegistry(hooks),
   ...createCleanRegistry(utils),

@@ -1,9 +1,10 @@
 "use client"
 
 import * as React from "react"
+import { registry } from "@/sesame/index"
+
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
-import { registry } from "@/fancy/index"
 
 interface ExplanationDemoProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string

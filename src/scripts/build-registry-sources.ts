@@ -108,11 +108,11 @@ function processItemFiles(registryItem: any): any[] {
       const hookPath = file.path.replace("hooks/", "")
       sourceFilePath = path.join(baseDir, "src", "hooks", `${hookPath}.ts`)
     } else if (file.type === "registry:ui") {
-      const componentPath = file.path.replace("fancy/", "")
+      const componentPath = file.path.replace("sesame/", "")
       sourceFilePath = path.join(
         baseDir,
         "src",
-        "fancy",
+        "sesame",
         "components",
         `${componentPath}.tsx`
       )
@@ -121,7 +121,7 @@ function processItemFiles(registryItem: any): any[] {
       sourceFilePath = path.join(
         baseDir,
         "src",
-        "fancy",
+        "sesame",
         "examples",
         `${examplePath}.tsx`
       )
@@ -148,16 +148,16 @@ function processItemFiles(registryItem: any): any[] {
     if (file.type === "registry:hook") {
       targetPath = `hooks/${fileName}.ts`
     } else if (file.type === "registry:ui") {
-      const category = getCategory(file.path.replace("fancy/", ""))
+      const category = getCategory(file.path.replace("sesame/", ""))
       targetPath = category
-        ? `components/fancy/${category}/${fileName}.tsx`
-        : `components/fancy/${fileName}.tsx`
+        ? `components/sesame/${category}/${fileName}.tsx`
+        : `components/sesame/${fileName}.tsx`
     } else if (file.type === "registry:block") {
       const examplePath = file.path.replace("examples/", "")
       const category = getCategory(examplePath)
       targetPath = category
-        ? `components/fancy/${category}/${fileName}.tsx`
-        : `components/fancy/${fileName}.tsx`
+        ? `components/sesame/${category}/${fileName}.tsx`
+        : `components/sesame/${fileName}.tsx`
     } else if (file.type === "registry:lib") {
       const utilPath = file.path.replace("utils/", "")
       const category = getCategory(utilPath)
@@ -209,8 +209,6 @@ function gatherAllDependencyFiles(
   // 2) Recursively gather sub-dependencies (registryDependencies)
   if (item.registryDependencies) {
     item.registryDependencies.forEach((depUrl: string) => {
-      // depUrl is e.g. 'https://fancycomponents.dev/r/gravity.json'
-      // we want just "gravity"
       const depName = depUrl.split("/").pop()?.replace(".json", "")
       if (depName && registry[depName]) {
         const subFiles = gatherAllDependencyFiles(depName, registry, visited)
@@ -264,24 +262,24 @@ function processRegistryItem(name: string, item: any): any {
     author: item.author, // Add this line
   }
 
-   // Collect direct registryDependencies
-   const registryDeps = new Set<string>()
-   if (item.registryDependencies) {
-     item.registryDependencies.forEach((dep: string) => {
-       // Don't add self as dependency
-       const fileName = dep.split("/").pop()
-       if (fileName !== name) {
-         registryDeps.add(`https://fancycomponents.dev/r/${fileName}.json`)
-       }
-     })
-   }
+  // Collect direct registryDependencies
+  const registryDeps = new Set<string>()
+  if (item.registryDependencies) {
+    item.registryDependencies.forEach((dep: string) => {
+      // Don't add self as dependency
+      const fileName = dep.split("/").pop()
+      if (fileName !== name) {
+        registryDeps.add(`https://sesameui.vercel.app/r/${fileName}.json`)
+      }
+    })
+  }
 
   // Also add hooks/libs from item.files
   item.files.forEach((f: any) => {
     if (f.type === "registry:hook" || f.type === "registry:lib") {
       const fileName = f.path.split("/").pop()
       if (fileName !== name) {
-        registryDeps.add(`https://fancycomponents.dev/r/${fileName}.json`)
+        registryDeps.add(`https://sesameui.vercel.app/r/${fileName}.json`)
       }
     }
   })
@@ -293,9 +291,8 @@ function processRegistryItem(name: string, item: any): any {
 
   const allFiles = processItemFiles(item)
 
-
-   // NEW: Detect in-file imports and handle them dynamically:
-   allFiles.forEach((file) => {
+  // NEW: Detect in-file imports and handle them dynamically:
+  allFiles.forEach((file) => {
     const imports = parseImports(file.content)
     imports.forEach((importPath) => {
       // Handle shadcn components
@@ -311,26 +308,10 @@ function processRegistryItem(name: string, item: any): any {
       const possibleName = importPath.split("/").pop() || ""
       const registry = JSON.parse(fs.readFileSync(registryJsonPath, "utf-8"))
       if (registry[possibleName] && possibleName !== name) {
-        registryDeps.add(`https://fancycomponents.dev/r/${possibleName}.json`)
+        registryDeps.add(`https://sesameui.vercel.app/r/${possibleName}.json`)
       }
     })
   })
-
-  // // Also update registryDependencies to include all discovered dependencies
-  // allFiles.forEach((file) => {
-  //   const imports = parseImports(file.content)
-  //   imports.forEach((importPath) => {
-  //     if (
-  //       importPath.startsWith("@/hooks/") ||
-  //       importPath.startsWith("@/utils/")
-  //     ) {
-  //       const depName = importPath.split("/").pop()
-  //       if (depName && registry[depName]) {
-  //         registryDeps.add(`https://fancycomponents.dev/r/${depName}.json`)
-  //       }
-  //     }
-  //   })
-  // })
 
   if (registryDeps.size > 0) {
     output.registryDependencies = Array.from(registryDeps)
@@ -372,7 +353,7 @@ function processRegistryItem(name: string, item: any): any {
         "yellow-foreground": "#ffd726",
         "primary-red": "var(--red)",
         "primary-orange": "var(--orange)",
-        "primary-pink": "var(--pink)", 
+        "primary-pink": "var(--pink)",
         "primary-blue": "var(--blue)",
       },
     }

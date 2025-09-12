@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import TextRotate from "@/sesame/components/text/text-rotate"
 import { ArrowRight } from "lucide-react"
 import { LayoutGroup, motion } from "motion/react"
-
-import TextRotate from "@/fancy/components/text/text-rotate"
 
 import { ScramblePreview } from "./typewriter-scramble"
 

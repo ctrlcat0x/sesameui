@@ -4,7 +4,7 @@ description: An animated text highlighting component with multiple trigger modes
 component: true
 ---
 
-<ComponentPreview name="text-highlighter-demo"/>
+<ComponentPreview name="text-highlighter-demo" />
 
 ## Installation
 
@@ -16,7 +16,10 @@ component: true
 </TabsList>
 <TabsContent value="cli">
 
-<InstallTabs command="shadcn@latest add &quot;https://fancycomponents.dev/r/text-highlighter.json&quot;" npx />
+<InstallTabs
+  command='shadcn@latest add "https://fancycomponents.dev/r/text-highlighter.json"'
+  npx
+/>
 
 </TabsContent>  
 <TabsContent value="manual">
@@ -29,10 +32,11 @@ component: true
 ## Usage
 
 Just wrap your text content with the component and set the highlight color with the `highlightColor` prop.
+
 <CodeSnippet title="Usage example">
-```tsx
-<TextHighlighter highlightColor="hsl(25, 90%, 80%)">Howdy!</TextHighlighter>
-```
+  ```tsx
+  <TextHighlighter highlightColor="hsl(25, 90%, 80%)">Howdy!</TextHighlighter>
+  ```
 </CodeSnippet>
 
 ## Understanding the component
@@ -76,20 +80,21 @@ const getBackgroundSize = (animated: boolean) => {
 
 // Get background position based on direction
 const getBackgroundPosition = () => {
-  switch (currentDirection) {
-    case "ltr":
-      return "0% 0%"
-    case "rtl":
-      return "100% 0%"
-    case "ttb":
-      return "0% 0%"
-    case "btt":
-      return "0% 100%"
-    default:
-      return "0% 0%"
-  }
+switch (currentDirection) {
+case "ltr":
+return "0% 0%"
+case "rtl":
+return "100% 0%"
+case "ttb":
+return "0% 0%"
+case "btt":
+return "0% 100%"
+default:
+return "0% 0%"
 }
-```
+}
+
+````
 </CodeSnippet>
 
 Then, we just use motion to animate the `background-size` property based on the `shouldAnimate` state:
@@ -109,7 +114,8 @@ Then, we just use motion to animate the `background-size` property based on the 
 >
   {children}
 </motion.span>
-```
+````
+
 </CodeSnippet>
 
 You can customize the transition by passing a `Transition` object to the `transition` prop. The default value is spring type animation `{ type: "spring", duration: 1, delay: 0., bounce: 0 }`.
@@ -121,33 +127,35 @@ By default, the animation will be triggered once the component is mounted. Anoth
 You can control the highlight animation direction via the `direction` prop. The available options are:
 
 - `"ltr"` - Left to right animation
-- `"rtl"` - Right to left animation  
+- `"rtl"` - Right to left animation
 - `"ttb"` - Top to bottom animation
 - `"btt"` - Bottom to top animation
 
 The following demo shows how to dynamically change the reveal direction based on the user's scroll direction. Scroll left and right to see the animations trigger.
 
-<ComponentPreview name="text-highlighter-scroll-demo"/>
+<ComponentPreview name="text-highlighter-scroll-demo" />
 
 ### Hover
 
 You can also trigger the highlight animation via hover, if you set the `triggerType` prop to `"hover"`:
 
-<ComponentPreview name="text-highlighter-hover-demo"/>
+<ComponentPreview name="text-highlighter-hover-demo" />
 
 ### Control via ref
 
 You can also trigger the animation via an exposed ref. This is useful if you want to trigger the animation programmatically:
 
-<ComponentPreview name="text-highlighter-ref-demo"/>
+<ComponentPreview name="text-highlighter-ref-demo" />
 
 ## Notes
 
-- While the component only support a single-colored highlight directly, you can change it to an image, a fancy gradient, or anything that a `background-image` can handle. Just change the appropriate line:
-<CodeSnippet title="Fancier highlight color">
+- While the component only support a single-colored highlight directly, you can change it to an image, a sesame gradient, or anything that a `background-image` can handle. Just change the appropriate line:
+  <CodeSnippet title="Fancier highlight color">
+
 ```ts
 backgroundImage: `linear-gradient(${highlightColor}, ${highlightColor})`,   // change this to make it fancier
 ```
+
 </CodeSnippet>
 
 - As many users have pointed out, excessive animations can be distracting and impact readability, especially when highlighting large blocks of text. Consider using animations sparingly and adjusting the transition duration and delay to create a more subtle effect. You may also want to use the `useInViewOptions` prop to control when animations trigger, for example by increasing the `amount` threshold or setting `once: true` to only animate elements once.
@@ -229,7 +237,9 @@ backgroundImage: `linear-gradient(${highlightColor}, ${highlightColor})`,   // c
   <TableBody>
     <TableRow>
       <TableCell>animate(direction?: HighlightDirection)</TableCell>
-      <TableCell>Trigger the highlight animation with optional direction override</TableCell>
+      <TableCell>
+        Trigger the highlight animation with optional direction override
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableCell>reset()</TableCell>

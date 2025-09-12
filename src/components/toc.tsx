@@ -2,11 +2,11 @@
 "use client"
 
 import * as React from "react"
+import { motion } from "motion/react"
 
 import { TableOfContents } from "@/lib/toc"
 import { cn } from "@/lib/utils"
 import { useMounted } from "@/hooks/use-mounted"
-import { motion } from "motion/react"
 
 interface TocProps {
   toc: TableOfContents
@@ -94,12 +94,26 @@ function Tree({ tree, level = 1, activeItem }: TreeProps) {
                   behavior: "smooth",
                 })
               }}
-              initial={{ fontVariationSettings: "'wght' 400", color: item.url === `#${activeItem}` ? "var(--foreground)" : "hsl(var(--muted-foreground))"  }}
-              whileHover={{ fontVariationSettings: "'wght' 500", color: "var(--foreground)", transition: {duration: 0.3, ease: "easeOut"}}}
+              initial={{
+                fontVariationSettings: "'wght' 400",
+                color:
+                  item.url === `#${activeItem}`
+                    ? "var(--foreground)"
+                    : "hsl(var(--muted-foreground))",
+              }}
+              whileHover={{
+                fontVariationSettings: "'wght' 500",
+                color: "var(--foreground)",
+                transition: { duration: 0.3, ease: "easeOut" },
+              }}
               animate={{
-                fontVariationSettings: item.url === `#${activeItem}` ? "'wght' 500" : "'wght' 400",
-                color: item.url === `#${activeItem}` ? "var(--foreground)" : "hsl(var(--muted-foreground))",
-                transition: {duration: 0.3, ease: "easeOut"}
+                fontVariationSettings:
+                  item.url === `#${activeItem}` ? "'wght' 500" : "'wght' 400",
+                color:
+                  item.url === `#${activeItem}`
+                    ? "var(--foreground)"
+                    : "hsl(var(--muted-foreground))",
+                transition: { duration: 0.3, ease: "easeOut" },
               }}
               className={cn(
                 "inline-block no-underline duration-300 transition-colors ease-out",

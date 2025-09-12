@@ -1,5 +1,5 @@
 import { Children } from "react"
-import { ExternalLinkIcon } from "lucide-react"
+import { ArrowUpRightIcon, ExternalLinkIcon } from "lucide-react"
 import type { MDXComponents } from "mdx/types"
 
 import { cn } from "@/lib/utils"
@@ -82,8 +82,9 @@ export function mdxComponents(components?: MDXComponents): MDXComponents {
       ...props
     }: React.HTMLAttributes<HTMLAnchorElement>) => (
       <a
+        target="_blank"
         className={cn(
-          "font-medium text-base md:text-lg  text-blue hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300 duration-300 ease-out transition inline-flex items-center leading-0",
+          "font-medium text-base md:text-lg text-blue hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300 duration-300 ease-out transition inline-flex items-center leading-0",
           className
         )}
         {...props}

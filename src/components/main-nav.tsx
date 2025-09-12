@@ -42,13 +42,13 @@ export function MainNav() {
           <LocalSearch />
         </div>
         <a
-          href="https://github.com/danielpetho/fancy"
+          href="https://github.com/ctrlcat0x/sesameui"
           className="block lg:hidden"
         >
           <Icons.twitter className="w-[18px] h-[18px]" />
         </a>
         <a
-          href="https://github.com/danielpetho/fancy"
+          href="https://github.com/ctrlcat0x/sesameui"
           className="hidden lg:block"
         >
           <span
@@ -59,13 +59,13 @@ export function MainNav() {
           </span>
         </a>
         <a
-          href="https://github.com/danielpetho/fancy"
+          href="https://github.com/ctrlcat0x/sesameui"
           className="block lg:hidden"
         >
           <Icons.gitHub className="w-[18px] h-[18px]" />
         </a>
         <a
-          href="https://github.com/danielpetho/fancy"
+          href="https://github.com/ctrlcat0x/sesameui"
           className="hidden lg:block"
         >
           <span
